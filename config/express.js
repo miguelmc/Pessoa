@@ -1,4 +1,5 @@
-var express = require('express'),
+var config = require('./config.js'),
+    express = require('express'),
     morgan = require('morgan'),
     compress = require('compression'),
     bodyParser = require('body-parser'),

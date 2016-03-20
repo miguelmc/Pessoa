@@ -16,7 +16,7 @@
     "ejs": "^2.4.1",
     "express": "latest",
     "method-override": "^2.3.5",
-    "mongoose": "latest",
+    "mongoose": "^4.4.8",
     "morgan": "^1.7.0",
     "nodemon": "latest",
     "passport": "latest"
