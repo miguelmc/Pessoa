@@ -1,9 +1,8 @@
+// Entry schema.
+
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-// Entry schema.
-// TODO: Link it (or however mongo does it) with Issues.
-//       Figure how to keep track of the actual pdfs.
 var EntrySchema = new Schema({
   author: {
     type: String,
@@ -19,7 +18,12 @@ var EntrySchema = new Schema({
   },
   type: {
     type: String,
-    enum: ['Article', 'Document', "Review", "Tribute"]
+    enum: ['Article', 'Document', "Review", "Tribute"],
+    required: true
+  },
+  issue: {
+    type: Schema.ObjectId,
+    ref: 'Issue'
   },
   pdfPath: String,
   imagePath: String,

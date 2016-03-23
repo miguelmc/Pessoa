@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><% title %></title>
+    <title><%= title %></title>
   </head>
   <body>
+    <% if ( username ) { %>
+      <h2>You are signed in as <%=username%></h2>
+      <a href="/signout">Sign out</a>
+    <% } %>
+
     <h1><%= title %></h1>
+
   </body>
 </html>
