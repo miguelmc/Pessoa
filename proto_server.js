@@ -10,7 +10,6 @@ app.use(express.static('assets'));
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 
-
 // get requests
 app.get('/mainslides', function(request, response) {
   var slides = [{"link":"http://www.google.com", "img":"holygrail.png"},
