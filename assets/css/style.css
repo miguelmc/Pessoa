@@ -1,48 +1,185 @@
+/* BASE STYLING */
 body {
   margin: 0;
   padding: 0;
-  background-color: white;
+  background-color: #333451;
+  font-family: 'Arvo', Courier, sans-serif;
+  color: #f2ebd8;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Josefin Sans', Futura, sans-serif;
+  font-weight: 700;
+}
+
+a, a:visited {
+  color: #f58548;
+}
+
+
+
+/* TOP BAR STYLING */
 #top-bar {
   width: 100%;
   position: fixed;
   top: 0;
-  z-index: 10;
-  box-shadow: 0px 2px 2px 1px rgb(100,100,100);
-  background-color: #9b59b6;
-  display: block;
-  height: 4rem;
+  z-index: 100;
+  background-color: #282938;
+  height: 84px;
+
+  font-family: 'Josefin Sans', Futura, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-#home {
-  float: left;
-  width: 30%;
-  padding-left: 2rem;
-  padding-top: 1rem;
-  color: white;
-  font-size: 1.75rem;
+#top-bar img {
+  height: 64px;
+  width: auto;
+  padding: 10px 30px;
+  display: inline-block;
 }
 
-#home a {
+.nav, .nav a, .nav a:visited {
+  display: inline-block;
+  float: right;
+  padding: 20px;
+  margin: 0px 4px;
+  color: #ec4e4e;
   text-decoration: none;
-  color: white;
-}
-
-.top-item {
-  float: left;
-  width: 15%;
   text-align: center;
-  padding-top: 1rem;
-  font-size: 1.5rem;
 }
 
-.top-item a {
-  text-decoration: none;
-  color: white;
+.nav:hover {
+  border-bottom: 4px solid #f58548;
 }
 
-#slides {
+
+
+/* BODY CONTENT STYLING */
+#content {
+  margin-top: 84px;
+}
+
+
+
+/* STEP CAROUSEL STYLING */
+.stepcarousel {
+  position: relative; /*leave this value alone*/
+  overflow: scroll; /*leave this value alone*/
+  width: 100%; /*Width of Carousel Viewer itself*/
+  height: 480px; /*Height should enough to fit largest content's height*/
+  background-color: #000;
+  -webkit-box-sizing: border-box; /* set box model so container width and height value includes any padding/border defined */
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.stepcarousel .belt {
+  position: absolute; /*leave this value alone*/
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+.stepcarousel .panel {
+  float: left; /*leave this value alone*/
+  overflow: hidden; /*clip content that go outside dimensions of holding panel DIV*/
+  width: 100%; /*Width of each panel holding each content. If removed, widths should be individually defined on each content DIV then. */
+  height: 480px;
+  z-index: 1;
+}
+
+.stepcarousel .panel img {
+  width: 20%;
+  height: auto;
+  opacity: 0.6;
+  position: absolute;
+  z-index: 3;
+}
+
+.panel-content {
+  padding: 40px 100px;
+  width: 700px;
+  z-index: 5;
+  position: absolute;
+}
+
+#mygallery-paginate {
+  position: absolute;
+  margin-top: 410px;
+  margin-left: 560px;
+  z-index: 50;
+}
+
+span.paginatecircle { /* CSS for paginate circle spans. Required */
+  background: #f58548;
+  border: 2px solid #ec4e4e;
+  border-radius: 10px;
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+span.paginatecircle:hover {background: gray;}
+span.paginatecircle.selected {background: #ec4e4e;}
+
+
+
+
+
+
+
+
+/* SEARCH BAR STYLING */
+.box {
+  margin: 20px auto;
+  width: 300px;
+  height: 50px;
+}
+
+.container-1 {
+  width: 300px;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+}
+
+.container-1 input#search {
+  width: 300px;
+  height: 50px;
+  background: #282938;
+  border: none;
+  font-size: 10pt;
+  float: left;
+  color: #63717f;
+  padding-left: 45px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+}
+
+.container-1 .icon {
+  position: absolute;
+  top: 50%;
+  margin-left: 17px;
+  margin-top: 17px;
+  z-index: 1;
+  color: #4f5b66;
+}
+
+#advanced-search {
+  text-align: center;
+}
+
+
+
+
+
+/*#slides {
   margin-top: 4rem;
 }
 
@@ -83,24 +220,7 @@ body {
   z-index: 10;
 }
 
-#search {
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  width:60%;
-  padding: 3rem 0;
-}
 
-#search:after {
-  content: '';
-  display:block;
-  clear:both;
-}
-
-#box {
-  float: left;
-  width: 95%;
-}
 
 #circle {
   float: left;
@@ -144,4 +264,4 @@ body {
   margin: 0 2.5%;
   background-color: white;
   box-shadow: 0px 2px 2px 1px rgb(100, 100, 100);
-}
+}*/
