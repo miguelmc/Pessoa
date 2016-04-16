@@ -15,11 +15,14 @@ module.exports = function(app) {
 
   app.get('/signout', users.signout);
 
-  app.route('/users')
+  // NOTE:
+  // 'users' route is clashing with angular's (rename to users123)
+  // This is no problem since this methods shouldn't be
+  // on production
+  app.route('/users123')
      .get(users.list)
      .post(users.create);
-
-  app.route('/users/:userId')
+  app.route('/users123/:userId')
      .get(users.read)
      .put(users.update)
      .delete(users.delete);

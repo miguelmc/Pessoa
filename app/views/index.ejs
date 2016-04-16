@@ -44,8 +44,8 @@
       <a href="/"><div class="nav">Números<br>Issues</div></a>
     </div>
     <div id="content">
-      <% if ( username ) { %>
-        <h2>You are signed in as <%=username%></h2>
+      <% if ( user ) { %>
+        <h2>You are signed in as <%= JSON.parse(user).username%></h2>
         <a href="/signout">Sign out</a>
       <% } %>
 
@@ -68,8 +68,7 @@
             <img src="https://s-media-cache-ak0.pinimg.com/736x/f5/4d/3b/f54d3b6dc21c36218d0a40025c580684.jpg">
             <div class="panel-content">
             <h1>Content Title</h1>
-            <p>Lorem ipsum dolor sit amet, nisl albucius vim cu. Qui tibique splendide an, sit error quaerendum eu. Mel ex quaerendum contentiones, his in omnium quaeque, ne mel nisl ferri eloquentiam. Ad cum interesset signiferumque. Alii solum an nec, ut apeirian inimicus pericula vix. Pro prima soluta albucius at, ea atqui option consectetuer vel, eos ad causae accusata quaestio. Error phaedrum id per. Unum vide percipit has ut. Ut pro odio senserit reformidans.</p>
-          </div></div>
+            <p>Lorem ipsum dolor sit amet, nisl albucius vim cu. Qui tibique splendide an, sit error quaerendum eu. Mel ex quaerendum contentiones, his in omnium quaeque, ne mel nisl ferri eloquentiam. Ad cum interesset signiferumque. Alii solum an nec, ut apeirian inimicus pericula vix. Pro prima soluta albucius at, ea atqui option consectetuer vel, eos ad causae accusata quaestio. Error phaedrum id per. Unum vide percipit has ut. Ut pro odio senserit reformidans.</p> </div></div>
           <div class="panel" id="p4">
             <img src="http://www.left.it/wp-content/uploads/2016/03/Almada-Negreiros-Fernando-Pessoa.jpg">
             <div class="panel-content">
@@ -125,12 +124,19 @@
 
     <section ng-view></section>
 
+    <script type="text/javascript">
+      window.user = <%- user || 'null' %>;
+    </script>
+
     <script type="text/javascript" src="/lib/angular/angular.js"></script>
     <script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
 
     <script type="text/javascript" src="/example/example.client.module.js"></script>
     <script type="text/javascript" src="/example/controllers/example.client.controller.js"></script>
     <script type="text/javascript" src="/example/config/example.client.routes.js"></script>
+
+    <script type="text/javascript" src="/users/users.client.module.js"></script>
+    <script type="text/javascript" src="/users/services/authentication.client.service.js"></script>
 
     <script type="text/javascript" src="/application.js"></script>
   </body>
