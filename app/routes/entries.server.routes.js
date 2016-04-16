@@ -1,14 +1,15 @@
-var entries = require('../controllers/entries.server.controller');
+var users = require('../controllers/users.server.controller'),
+    entries = require('../controllers/entries.server.controller');
 
 module.exports = function(app) {
-  app.route('/entries')
-     .post(entries.create)
-     .get(entries.list);
+  app.route('/api/entries')
+     .get(entries.list)
+     .post(users.requiresAdmin, entries.create);
 
-  app.route('/entries/:entryId')
+  app.route('/api/entries/:entryId')
      .get(entries.read)
-     .put(entries.update)
-     .delete(entries.delete);
+     .put(users.requiresAdmin, entries.update)
+     .delete(users.requiresAdmin, entries.delete);
 
   // Middleware handling :entryId
   app.param("entryId", entries.entryById);

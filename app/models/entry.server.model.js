@@ -6,15 +6,15 @@ var mongoose = require('mongoose'),
 var EntrySchema = new Schema({
   author: {
     type: String,
-    required: true
+    required: 'Author cannot be blank'
   },
   titleEn: {
     type: String,
-    required: true
+    required: 'Title cannot be blank'
   },
   titlePt: {
     type: String,
-    required: true
+    required: 'Title cannot be blank'
   },
   type: {
     type: String,

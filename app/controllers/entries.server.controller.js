@@ -1,11 +1,24 @@
 var Entry = require('mongoose').model('Entry');
 
+var getErrorMessage = function(err) {
+  if (err.errors) {
+    for (var errName in err.errors) {
+      if (err.errors[errName].message)
+        return err.errors[errName].message;
+    }
+  } else {
+    return 'Unknown server error';
+  }
+};
+
 exports.create = function(req, res, next) {
   var entry = new Entry(req.body);
 
   entry.save(function(err) {
     if (err) {
-      return next(err);
+      return res.status(400).send({
+        message: getErrorMessage(err)
+      });
     } else {
       res.json(entry);
     }
@@ -15,7 +28,9 @@ exports.create = function(req, res, next) {
 exports.list = function(req, res, next) {
   Entry.find({}, function(err, entries){
     if (err) {
-      return next(err);
+      return res.status(400).send({
+        message: getErrorMessage(err)
+      });
     } else {
       res.json(entries);
     }
@@ -29,7 +44,9 @@ exports.read = function(req, res) {
 exports.update = function(req, res, next) {
   Entry.findByIdAndUpdate(req.entry.id, req.body, function(err, entry) {
     if (err) {
-      return next(err);
+      return res.status(400).send({
+        message: getErrorMessage(err)
+      });
     } else {
       res.json(entry);
     }
@@ -39,7 +56,9 @@ exports.update = function(req, res, next) {
 exports.delete = function(req, res, next) {
   req.entry.remove(function(err) {
     if (err) {
-      return next(err);
+      return res.status(400).send({
+        message: getErrorMessage(err)
+      });
     } else {
       res.json(req.entry);
     }
@@ -51,11 +70,11 @@ exports.entryById = function(req, res, next, id) {
   Entry.findOne({
     _id: id
   }, function(err, entry) {
-    if (err) {
-      return next(err);
-    } else {
-      req.entry = entry;
-      next();
+    if (err) return next(err);
+    if (!entry) {
+      return next(new Error('Failed to load entry ' + id));
     }
+    req.entry = entry;
+    next();
   });
 };

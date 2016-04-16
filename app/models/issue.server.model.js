@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 var IssueSchema = new Schema({
   issueNumber: {
     type: Number,
-    required: true
+    required: 'Issue number cannot be empty.'
   },
   Season: {
     type: String,
@@ -13,7 +13,7 @@ var IssueSchema = new Schema({
   },
   year: {
     type: Number,
-    required: true
+    required: 'Year cannot be empty.'
   },
   pdfPaths: [String],
   created: {

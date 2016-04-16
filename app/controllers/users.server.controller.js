@@ -32,6 +32,21 @@ var getErrorMessage = function(err) {
   return message;
 };
 
+
+// Middleware that checks if user is authenticated.
+exports.requiresAdmin = function(req, res, next) {
+  // Here we assume that the ONLY user is the admin,
+  // else we could have to a specific authorization middleware.
+  // Consider this if project requirements ever change.
+  if (!req.isAuthenticated()) {
+    return res.status(401).send({
+      message: 'You are not logged in as admin'
+    });
+  }
+
+  next();
+};
+
 exports.renderSignin = function(req, res, next) {
   if (!req.user) {
     res.render('signin', {
