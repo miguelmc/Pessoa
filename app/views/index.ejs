@@ -25,7 +25,7 @@
         panelclass: 'panel', //class of panel DIVs each holding content
         autostep: {enable:true, moveby:1, pause:2000},
         panelbehavior: {speed:500, wraparound:true, wrapbehavior:'slide', persist:true},
-        defaultbuttons: {enable: true, moveby: 1, leftnav: ['img/slide-left.png', 20, 170], rightnav: ['img/slide-right.png', -80, 170]},
+        defaultbuttons: {enable: true, moveby: 1, leftnav: ['/img/slide-left.png', 20, 170], rightnav: ['/img/slide-right.png', -80, 170]},
         statusvars: ['statusA', 'statusB', 'statusC'], //register 3 variables that contain current panel (start), current panel (last), and total panels
         contenttype: ['inline'] //content setting ['inline'] or ['ajax', 'path_to_external_file']
       })
@@ -33,56 +33,62 @@
 
   </head>
   <body>
-
     <div id="top-bar">
-      <a href="/"><img src="img/logo.png" title="Pessoa Plural"></a>
-      <a href="/"><div class="nav">Sobre<br>About</div></a>
-      <a href="/"><div class="nav">Tributos<br>Tributes</div></a>
-      <a href="/"><div class="nav">Críticas<br>Reviews</div></a>
-      <a href="/"><div class="nav">Documentos<br>Documents</div></a>
+      <a href="/#!/"><img src="img/logo.png" title="Pessoa Plural"></a>
+      <a href="/#!/"><div class="nav">Sobre<br>About</div></a>
+      <a href="/#!/"><div class="nav">Tributos<br>Tributes</div></a>
+      <a href="/#!/"><div class="nav">Críticas<br>Reviews</div></a>
+      <a href="/#!/"><div class="nav">Documentos<br>Documents</div></a>
       <a href="articles.html"><div class="nav">Artigos<br>Articles</div></a>
-      <a href="/"><div class="nav">Números<br>Issues</div></a>
+      <a href="/#!/"><div class="nav">Números<br>Issues</div></a>
     </div>
-    <div id="content">
-      <% if ( user ) { %>
-        <h2>You are signed in as <%= JSON.parse(user).username%></h2>
-        <a href="/signout">Sign out</a>
-      <% } %>
 
+    <div id="content">
       <div id="mygallery" class="stepcarousel">
         <p id="mygallery-paginate"><span class="paginatecircle" data-moveby="1"></span></p>
         <div class="belt">
           <div class="panel" id="p1">
-            <img src="http://www.efekto.tv/sites/default/files/0f0h0sfdfs.jpg">
+            <img src="/img/pessoa1.jpg">
             <div class="panel-content">
-            <h1>Content Title</h1>
-            <p>Lorem ipsum dolor sit amet, nisl albucius vim cu. Qui tibique splendide an, sit error quaerendum eu. Mel ex quaerendum contentiones, his in omnium quaeque, ne mel nisl ferri eloquentiam. Ad cum interesset signiferumque. Alii solum an nec, ut apeirian inimicus pericula vix. Pro prima soluta albucius at, ea atqui option consectetuer vel, eos ad causae accusata quaestio. Error phaedrum id per. Unum vide percipit has ut. Ut pro odio senserit reformidans.</p>
-          </div></div>
+              <h1>Content Title</h1>
+            </div>
+          </div>
           <div class="panel" id="p2">
-            <img src="https://c2.staticflickr.com/2/1049/1232850925_1a13ea967f_b.jpg">
+            <img src="/img/pessoa2.jpg">
             <div class="panel-content">
-            <h1>Content Title</h1>
-            <p>Lorem ipsum dolor sit amet, nisl albucius vim cu. Qui tibique splendide an, sit error quaerendum eu. Mel ex quaerendum contentiones, his in omnium quaeque, ne mel nisl ferri eloquentiam. Ad cum interesset signiferumque. Alii solum an nec, ut apeirian inimicus pericula vix. Pro prima soluta albucius at, ea atqui option consectetuer vel, eos ad causae accusata quaestio. Error phaedrum id per. Unum vide percipit has ut. Ut pro odio senserit reformidans.</p>
-          </div></div>
+              <h1>Content Title</h1>
+            </div>
+          </div>
           <div class="panel" id="p3">
-            <img src="https://s-media-cache-ak0.pinimg.com/736x/f5/4d/3b/f54d3b6dc21c36218d0a40025c580684.jpg">
+            <img src="/img/pessoa3.jpg">
             <div class="panel-content">
-            <h1>Content Title</h1>
-            <p>Lorem ipsum dolor sit amet, nisl albucius vim cu. Qui tibique splendide an, sit error quaerendum eu. Mel ex quaerendum contentiones, his in omnium quaeque, ne mel nisl ferri eloquentiam. Ad cum interesset signiferumque. Alii solum an nec, ut apeirian inimicus pericula vix. Pro prima soluta albucius at, ea atqui option consectetuer vel, eos ad causae accusata quaestio. Error phaedrum id per. Unum vide percipit has ut. Ut pro odio senserit reformidans.</p> </div></div>
+              <h1>Content Title</h1>
+            </div>
+          </div>
           <div class="panel" id="p4">
-            <img src="http://www.left.it/wp-content/uploads/2016/03/Almada-Negreiros-Fernando-Pessoa.jpg">
+            <img src="/img/pessoa4.jpg">
             <div class="panel-content">
-            <h1>Content Title</h1>
-            <p>Lorem ipsum dolor sit amet, nisl albucius vim cu. Qui tibique splendide an, sit error quaerendum eu. Mel ex quaerendum contentiones, his in omnium quaeque, ne mel nisl ferri eloquentiam. Ad cum interesset signiferumque. Alii solum an nec, ut apeirian inimicus pericula vix. Pro prima soluta albucius at, ea atqui option consectetuer vel, eos ad causae accusata quaestio. Error phaedrum id per. Unum vide percipit has ut. Ut pro odio senserit reformidans.</p>
-          </div></div>
+              <h1>Content Title</h1>
+            </div>
+          </div>
           <div class="panel" id="p5">
-            <img src="http://shifter.pt/wp-content/uploads/2015/12/odeithsurface4pro_02.jpg">
+            <img src="/img/pessoa5.jpg">
             <div class="panel-content">
-            <h1>Content Title</h1>
-            <p>Lorem ipsum dolor sit amet, nisl albucius vim cu. Qui tibique splendide an, sit error quaerendum eu. Mel ex quaerendum contentiones, his in omnium quaeque, ne mel nisl ferri eloquentiam. Ad cum interesset signiferumque. Alii solum an nec, ut apeirian inimicus pericula vix. Pro prima soluta albucius at, ea atqui option consectetuer vel, eos ad causae accusata quaestio. Error phaedrum id per. Unum vide percipit has ut. Ut pro odio senserit reformidans.</p>
-          </div></div>
+              <h1>Content Title</h1>
+            </div>
+          </div>
         </div>
       </div>
+      <div class="box">
+        <div class="container-1">
+          <span class="icon"><i class="fa fa-search"></i></span>
+          <input type="search" id="search" placeholder="Search..." />
+        </div>
+      </div>
+
+      <p id="advanced-search"><a href="/">Advanced Search | Busca Avancada</a></p>
+    </div>
+
 
       <!-- <div id="search">
         <form id="search-form">
@@ -90,15 +96,6 @@
           <button type="submit" id="search-go"><div class="btn">Search</div></button>
         </form>
       </div> -->
-      <div class="box">
-        <div class="container-1">
-            <span class="icon"><i class="fa fa-search"></i></span>
-            <input type="search" id="search" placeholder="Search..." />
-        </div>
-      </div>
-
-      <p id="advanced-search"><a href="/">Advanced Search | Busca Avancada</a></p>
-    </div>
 
 <!--     <div id="slide-arrows">
       <div id="slide-left">
@@ -131,6 +128,11 @@
     <script type="text/javascript" src="/lib/angular/angular.js"></script>
     <script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
     <script type="text/javascript" src="/lib/angular-resource/angular-resource.js"></script>
+
+    <script type="text/javascript" src="/entries/entries.client.module.js"></script>
+    <script type="text/javascript" src="/entries/controllers/entries.client.controller.js"></script>
+    <script type="text/javascript" src="/entries/services/entries.client.service.js"></script>
+    <script type="text/javascript" src="/entries/config/entries.client.routes.js"></script>
 
     <script type="text/javascript" src="/example/example.client.module.js"></script>
     <script type="text/javascript" src="/example/controllers/example.client.controller.js"></script>

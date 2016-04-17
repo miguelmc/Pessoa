@@ -1,4 +1,15 @@
 <section ng-controller=ExampleController>
-  <input type=text id=text1 ng-model=name>
-  <input type=text id=text2 ng-model=name>
+
+  <div data-ng-show="!authentication.user">
+    <p>Admin? <a href="/signin">Sign in</a></p>
+  </div>
+  <div data-ng-show="authentication.user">
+    <p>Signed in as <span data-ng-bind="authentication.user.username"></span></p>
+    <a href="/signout">Sign out</a>
+    <ul>
+      <li><a href="/#!/entries">List entries</a></li>
+      <li><a href="/#!/entries/create">Create entry</a></li>
+    </ul>
+  </div>
+
 </section>
