@@ -67,7 +67,7 @@ a, a:visited {
 /* STEP CAROUSEL STYLING */
 .stepcarousel {
   position: relative; /*leave this value alone*/
-  overflow: scroll; /*leave this value alone*/
+  overflow: hidden; /*leave this value alone*/
   width: 100%; /*Width of Carousel Viewer itself*/
   height: 480px; /*Height should enough to fit largest content's height*/
   background-color: #000;
@@ -85,7 +85,7 @@ a, a:visited {
 
 .stepcarousel .panel {
   float: left; /*leave this value alone*/
-  overflow: hidden; /*clip content that go outside dimensions of holding panel DIV*/
+  /*overflow: hidden; clip content that go outside dimensions of holding panel DIV*/
   width: 100%; /*Width of each panel holding each content. If removed, widths should be individually defined on each content DIV then. */
   height: 480px;
   z-index: 1;
@@ -265,3 +265,28 @@ span.paginatecircle.selected {background: #ec4e4e;}
   background-color: white;
   box-shadow: 0px 2px 2px 1px rgb(100, 100, 100);
 }*/
+
+#slides_control > div{
+  height: 200px;
+}
+
+#carousel-img{
+  margin: auto;
+  width: 100%;
+}
+
+#slides_control {
+  position:absolute;
+  width: 400px;
+  left:50%;
+  top:20px;
+  margin-left:-200px;
+}
+
+#indicators {
+  margin-left: auto;
+  margin-right: auto;
+  table-layout: fixed;
+  border-collapse: collapse;
+  z-index: -1; position:relative
+}

@@ -6,29 +6,13 @@
 
     <link href='https://fonts.googleapis.com/css?family=Josefin+Sans:400,700' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Arvo:400,400italic,700' rel='stylesheet' type='text/css'>
+    <link href="/lib/angular-carousel/dist/angular-carousel.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <script src="js/jquery-2.2.0.min.js"></script>
-    <script type="text/javascript" src="js/stepcarousel.js">
-    /***********************************************
-    * Step Carousel Viewer script- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
-    * Visit http://www.dynamicDrive.com for hundreds of DHTML scripts
-    * Please keep this notice intact
-    ***********************************************/
-    </script>
+    <script src="/js/jquery-2.2.0.min.js"></script>
     <script type="text/javascript">
-      stepcarousel.setup({
-        galleryid: 'mygallery', //id of carousel DIV
-        beltclass: 'belt', //class of inner "belt" DIV containing all the panel DIVs
-        panelclass: 'panel', //class of panel DIVs each holding content
-        autostep: {enable:true, moveby:1, pause:2000},
-        panelbehavior: {speed:500, wraparound:true, wrapbehavior:'slide', persist:true},
-        defaultbuttons: {enable: true, moveby: 1, leftnav: ['/img/slide-left.png', 20, 170], rightnav: ['/img/slide-right.png', -80, 170]},
-        statusvars: ['statusA', 'statusB', 'statusC'], //register 3 variables that contain current panel (start), current panel (last), and total panels
-        contenttype: ['inline'] //content setting ['inline'] or ['ajax', 'path_to_external_file']
-      })
     </script>
 
   </head>
@@ -43,82 +27,6 @@
       <a href="/#!/"><div class="nav">Números<br>Issues</div></a>
     </div>
 
-    <div id="content">
-      <div id="mygallery" class="stepcarousel">
-        <p id="mygallery-paginate"><span class="paginatecircle" data-moveby="1"></span></p>
-        <div class="belt">
-          <div class="panel" id="p1">
-            <img src="/img/pessoa1.jpg">
-            <div class="panel-content">
-              <h1>Content Title</h1>
-            </div>
-          </div>
-          <div class="panel" id="p2">
-            <img src="/img/pessoa2.jpg">
-            <div class="panel-content">
-              <h1>Content Title</h1>
-            </div>
-          </div>
-          <div class="panel" id="p3">
-            <img src="/img/pessoa3.jpg">
-            <div class="panel-content">
-              <h1>Content Title</h1>
-            </div>
-          </div>
-          <div class="panel" id="p4">
-            <img src="/img/pessoa4.jpg">
-            <div class="panel-content">
-              <h1>Content Title</h1>
-            </div>
-          </div>
-          <div class="panel" id="p5">
-            <img src="/img/pessoa5.jpg">
-            <div class="panel-content">
-              <h1>Content Title</h1>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="box">
-        <div class="container-1">
-          <span class="icon"><i class="fa fa-search"></i></span>
-          <input type="search" id="search" placeholder="Search..." />
-        </div>
-      </div>
-
-      <p id="advanced-search"><a href="/">Advanced Search | Busca Avancada</a></p>
-    </div>
-
-
-      <!-- <div id="search">
-        <form id="search-form">
-          <div id="box"><input type="text" placeholder="Search" id="search-box"></div>
-          <button type="submit" id="search-go"><div class="btn">Search</div></button>
-        </form>
-      </div> -->
-
-<!--     <div id="slide-arrows">
-      <div id="slide-left">
-        <button id="sleft"><img src="img/SlideLeft.png" width="100%"></button>
-      </div>
-      <div id="slide-right">
-        <button id="sright"><img src="img/SlideRight.png" width="100%"></button>
-      </div>
-    </div>
-    <div id="slides">
-    </div>
-    <div id="slide-indicators">
-    </div>
-    <div id="search">
-    <form id="search-form">
-      <div id="box"><input type="text" placeholder="Search" id="search-box"></div>
-      <div id="circle"><button type="submit" id="search-go"><img src="img/SearchGo.png" width="100%"></button></div>
-    </form>
-    </div>
-    <div id="advanced">
-      <a href="">ADVANCED SEARCH/BUSCA AVANCADA</a>
-    </div> -->
-
     <section ng-view></section>
 
     <script type="text/javascript">
@@ -128,6 +36,8 @@
     <script type="text/javascript" src="/lib/angular/angular.js"></script>
     <script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
     <script type="text/javascript" src="/lib/angular-resource/angular-resource.js"></script>
+    <script type="text/javascript" src="/lib/angular-touch/angular-touch.js"></script>
+    <script type="text/javascript" src="/lib/angular-carousel/dist/angular-carousel.js"></script>
 
     <script type="text/javascript" src="/entries/entries.client.module.js"></script>
     <script type="text/javascript" src="/entries/controllers/entries.client.controller.js"></script>

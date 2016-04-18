@@ -11,6 +11,8 @@
     "url": "https://github.com/miguelmc/Pessoa"
   },
   "dependencies": {
+    "angular-carousel": "^1.0.1",
+    "angular-touch": "^1.5.3",
     "body-parser": "^1.15.0",
     "compression": "^1.6.1",
     "connect-flash": "^0.1.1",
