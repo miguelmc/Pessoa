@@ -1,49 +1,50 @@
 <section data-ng-controller="IssuesController">
   <h1>New Issue</h1>
-  <form data-ng-submit="create()" novalidate>
- 
-    <div>
-      <label for="issueNumber">Issue Number</label>
-      <div>
-        <input type="text" data-ng-model="issueNumber" id="issueNumber"
-                           placeholder="IssueNumber" required>
-      </div>
-    </div>
+  <md-content layout-padding id="new-issue-form" >
+    <form name="newIssue" data-ng-submit="create()" novalidate>
+  
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Issue Number</label>
+          <input data-ng-model="issueNumber" required>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
 
-    <div>
-      <label for="notes">Additional information for issue (for example: Jenning's Issue)</label>
-      <div>
-        <input type="text" data-ng-model="notes" id="notes"
-                           placeholder="Aditional Info">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Additional information for issue (for example: Jenning's Issue)</label>
+          <input data-ng-model="notes">
+        </md-input-container>
       </div>
-    </div>
 
-    <div>
-      <label for="season">Season</label>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Season</label>
+        <md-select ng-model="season" required>
+          <md-option value="Spring">Spring</md-option>
+          <md-option value="Summer">Summer</md-option>
+          <md-option value="Fall">Fall</md-option>
+          <md-option value="Winter">Winter</md-option>
+        </md-select>
+        <div ng-messages>
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Year</label>
+        <input ng-model="year" type="number" step="1" required>
+        <div ng-messages>
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
+
       <div>
-        <select data-ng-model="season" id="season" name="season" required>
-          <option value="">---Please select---</option>
-          <option value="Spring">Spring</option>
-          <option value="Summer">Summer</option>
-          <option value="Fall">Fall</option>
-          <option value="Winter">Winter</option>
-        </select>
+        <md-button type="submit" class="md-raised">Submit</md-button>
       </div>
-    </div>
-
-    <div>
-      <label for="year">Year</label>
-      <div>
-        <input type="text" data-ng-model="year" id="year"
-                           placeholder="Enter year" required>
+      <div data-ng-show="error">
+        <strong data-ng-bind="error"></strong>
       </div>
-    </div>
-
-    <div>
-      <input type="submit">
-    </div>
-    <div data-ng-show="error">
-      <strong data-ng-bind="error"></strong>
-    </div>
-  </form>
+    </form>
+  </md-content>
 </section>

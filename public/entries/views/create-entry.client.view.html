@@ -1,56 +1,76 @@
 <section data-ng-controller="EntriesController">
   <h1>New Entry</h1>
-  <form data-ng-submit="create()" novalidate>
- 
-    <div>
-      <label for="author">Author</label>
-      <div>
-        <input type="text" data-ng-model="author" id="author"
-                           placeholder="Author" required>
-      </div>
-    </div>
+  <md-content layout-padding id="new-issue-form" >
+    <form data-ng-submit="create()" novalidate>
+  
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Author</label>
+          <input data-ng-model="author" required>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
 
-    <div>
-      <label for="titleEn">English Title</label>
-      <div>
-        <input type="text" data-ng-model="titleEn" id="titleEn"
-                           placeholder="TitleEn" required>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Type of document</label>
+          <md-select ng-model="type" required>
+            <md-option value="">---Please select---</md-option>
+            <md-option value="Article">Article</md-option>
+            <md-option value="Document">Document</md-option>
+            <md-option value="Review">Review</md-option>
+            <md-option value="Tribute">Tribute</md-option>
+          </md-select>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
       </div>
-    </div>
 
-    <div>
-      <label for="titlePt">Portuguese Title</label>
-      <div>
-        <input type="text" data-ng-model="titlePt" id="titlePt"
-                           placeholder="TitlePt" required>
-      </div>
-    </div>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>English Title</label>
+        <input data-ng-model="titleEn" required>
+        <div ng-messages>
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
 
-    <div>
-      <label for="type">Type of document</label>
-      <div>
-        <select data-ng-model="type" id="type" name="type" required>
-          <option value="">---Please select---</option>
-          <option value="Article">Article</option>
-          <option value="Document">Document</option>
-          <option value="Review">Review</option>
-          <option value="Tribute">Tribute</option>
-        </select>
-      </div>
-    </div>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Portuguese Title</label>
+        <input data-ng-model="titlePt" required>
+        <div ng-messages>
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
 
-    <div>
-      <label for="issue">Issue</label>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Issue it belongs to</label>
+        <input ng-model="issue" type="number" step="1" required>
+        <div ng-messages>
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Abstract</label>
+        <textarea name="abstract" ng-model="abstractDesc" required></textarea>
+        <div ng-messages>
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
+
+      <h2 class="md-title">Portuguese Keywords</h2>
+      <md-chips ng-model="keywordsPt" readonly="false"></md-chips>
+
+      <h2 class="md-title">English Keywords</h2>
+      <md-chips ng-model="keywordsEn" readonly="false"></md-chips>
+
       <div>
-        <input type="text" data-ng-model="issue" id="issue"
-                           placeholder="issue" required>
+        <md-button type="submit" class="md-raised">Submit</md-button>
       </div>
-    </div>
-    <div>
-      <input type="submit">
-    </div>
-    <div data-ng-show="error">
-      <strong data-ng-bind="error"></strong>
-    </div>
-  </form>
+      <div data-ng-show="error">
+        <strong data-ng-bind="error"></strong>
+      </div>
+    </form>
+  </md-content>
 </section>

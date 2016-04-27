@@ -1,7 +1,22 @@
 <section data-ng-controller="EntriesController" data-ng-init="findOne()">
-  <h1 data-ng-bind="entry.titleEn"></h1>
-  <h1 data-ng-bind="entry.titlePt"></h1>
-  <h2 data-ng-bind="entry.author"></h1>
+  <h1>{{entry.author}}</h1>
+  <h2>{{entry.titleEn}}</h1>
+  <h2>[{{entry.titlePt}}]</h1>
+  <a href="#"> Link to pdf / </a>
+  <a href="#"> Link to images /</a>
+  <a href="#"> Toogle abstract </a>
+  <p>{{entry.abstractDesc}}</p>
+  <p>{{entry.keywordsPt}}</p>
+  <p>{{entry.keywordsEn}}</p>
+  <h3 data-ng-bind="entry.type"></h1>
+
+  <!-- TODO: Populate issue in mongo -->
+  <h3 data-ng-bind="entry.issue"></h1> 
+
+  <small>
+    <em>Posted on</em>
+    <em data-ng-bind="entry.created | date:'mediumDate'"></em>
+  </small>
 
   <!-- Probably need to add confirmation on deletion  -->
   <div data-ng-show="authentication.user">
@@ -9,12 +24,5 @@
     <a href="#" data-ng-click="delete();">delete</a>
   </div>
 
-  <small>
-    <em>Posted on</em>
-    <em data-ng-bind="entry.created | date:'mediumDate'"></em>
-  </small>
-
-  <h3 data-ng-bind="entry.type"></h1>
-  <h3 data-ng-bind="entry.issue"></h1>
   
 </section>

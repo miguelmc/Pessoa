@@ -31,9 +31,10 @@ var EntrySchema = new Schema({
   },
   abstractDesc: {
     type: String,
-    required: 'Please add and abstract with keywords'
+    required: 'Please add and abstract'
   },
-  keywords: [String], // TODO: Keywords are added to the abstract, will need a pre
+  keywordsEn: [String], // TODO: Keywords are added to the abstract, will need a pre
+  keywordsPt: [String], // TODO: Keywords are added to the abstract, will need a pre
   pdf: Buffer, // Will probably need something more robust, like GridFS
   images: [
   {

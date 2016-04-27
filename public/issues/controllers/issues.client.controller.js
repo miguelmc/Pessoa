@@ -2,6 +2,9 @@ angular.module('issues').controller('IssuesController',
   ['$scope', '$routeParams', '$location', 'Authentication', 'Issues',
     function($scope, $routeParams, $location, Authentication, Issues) {
       $scope.authentication = Authentication;
+      $scope.year = 2016 // TODO: Defaults to current year
+      $scope.issueNumber = 5 // TODO: Defaults to last issue
+      // TODO: Translate season to portuguese
 
       $scope.create = function() {
         // TODO: See whats up with img, pdf storage

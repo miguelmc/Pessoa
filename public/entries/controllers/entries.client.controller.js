@@ -2,6 +2,8 @@ angular.module('entries').controller('EntriesController',
   ['$scope', '$routeParams', '$location', 'Authentication', 'Entries',
     function($scope, $routeParams, $location, Authentication, Entries) {
       $scope.authentication = Authentication;
+      $scope.keywordsEn = [];
+      $scope.keywordsPt = [];
 
       $scope.create = function() {
         // TODO: See whats up with img, pdf storage
@@ -10,7 +12,10 @@ angular.module('entries').controller('EntriesController',
           titleEn: this.titleEn,
           titlePt: this.titlePt,
           type: this.type,
-          issue: this.issue
+          issue: this.issue,
+          abstractDesc: this.abstractDesc,
+          keywordsPt: $scope.keywordsPt,
+          keywordsEn: $scope.keywordsEn
         });
 
         entry.$save(function(response) {

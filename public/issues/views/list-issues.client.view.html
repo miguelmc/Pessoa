@@ -5,11 +5,9 @@
   </div>
   <ul>
     <li data-ng-repeat="issue in issues">
-      <a data-ng-href="#!/issues/{{issue._id}}" data-ng-bind="issue.issueNumber"></a>
-      <br>
-      <small data-ng-bind="issue.season"></small>
-      <small> / </small>
-      <small data-ng-bind="issue.year"></small>
+    <p data-ng-href="#!/issues/{{issue._id}}">Número {{issue.issueNumber}}, {{issue.season}} de {{issue.year}}</p>
+
+    <p data-ng-href="#!/issues/{{issue._id}}">Issue {{issue.issueNumber}}, {{issue.season}} de {{issue.year}}</p>
     </l1>
   </ul>
 </section>

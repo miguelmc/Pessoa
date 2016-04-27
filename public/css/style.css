@@ -62,6 +62,10 @@ a, a:visited {
   margin-top: 84px;
 }
 
+#new-issue-form {
+  margin: auto;
+  width: 50%;
+}
 
 
 /* STEP CAROUSEL STYLING */
