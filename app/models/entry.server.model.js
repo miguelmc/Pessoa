@@ -4,16 +4,19 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var EntrySchema = new Schema({
+  // Might need to make an Author model
   author: {
     type: String,
     required: 'Author cannot be blank'
   },
   titleEn: {
     type: String,
+    unique: true,
     required: 'Title cannot be blank'
   },
   titlePt: {
     type: String,
+    unique: true,
     required: 'Title cannot be blank'
   },
   type: {
@@ -24,10 +27,20 @@ var EntrySchema = new Schema({
   issue: {
     type: Schema.ObjectId,
     ref: 'Issue'
+    // required: true
   },
-  pdfPath: String,
-  imagePath: String,
-  abstractPath: String,
+  abstractDesc: {
+    type: String,
+    required: 'Please add and abstract with keywords'
+  },
+  keywords: [String], // TODO: Keywords are added to the abstract, will need a pre
+  pdf: Buffer, // Will probably need something more robust, like GridFS
+  images: [
+  {
+    name: String,
+    data: Buffer,
+    contentType: String // 'image/png'
+  }],
   created: {
     type: Date,
     default: Date.now

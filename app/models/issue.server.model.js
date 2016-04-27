@@ -6,6 +6,9 @@ var IssueSchema = new Schema({
     type: Number,
     required: 'Issue number cannot be empty.'
   },
+  notes: {
+    type: String
+  },
   Season: {
     type: String,
     required: true,
@@ -15,7 +18,6 @@ var IssueSchema = new Schema({
     type: Number,
     required: 'Year cannot be empty.'
   },
-  pdfPaths: [String],
   created: {
     type: Date,
     default: Date.now
