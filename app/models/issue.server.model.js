@@ -9,7 +9,7 @@ var IssueSchema = new Schema({
   notes: {
     type: String
   },
-  Season: {
+  season: {
     type: String,
     required: true,
     enum: ['Spring', 'Summer', "Fall", 'Winter']

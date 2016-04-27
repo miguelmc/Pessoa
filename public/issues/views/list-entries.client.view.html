@@ -1,0 +1,17 @@
+<section data-ng-controller="EntriesController" data-ng-init="find()">
+  <h1>Entries</h1>
+  <ul>
+    <li data-ng-repeat="entry in entries">
+      <a data-ng-href="#!/entries/{{entry._id}}" data-ng-bind="entry.titleEn"</a>
+      <br>
+      <a data-ng-href="#!/entries/{{entry._id}}" data-ng-bind="entry.titlePt"</a>
+      <br>
+      <small data-ng-bind="entry.type"></small>
+      <small> / </small>
+      <small data-ng-bind="entry.issue"></small>
+    </l1>
+  </ul>
+  <div>
+    <a href="/#!/entries/create">Create new entry</a>
+  </div>
+</section>

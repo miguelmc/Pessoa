@@ -1,0 +1,56 @@
+<section data-ng-controller="EntriesController">
+  <h1>New Entry</h1>
+  <form data-ng-submit="create()" novalidate>
+ 
+    <div>
+      <label for="author">Author</label>
+      <div>
+        <input type="text" data-ng-model="author" id="author"
+                           placeholder="Author" required>
+      </div>
+    </div>
+
+    <div>
+      <label for="titleEn">English Title</label>
+      <div>
+        <input type="text" data-ng-model="titleEn" id="titleEn"
+                           placeholder="TitleEn" required>
+      </div>
+    </div>
+
+    <div>
+      <label for="titlePt">Portuguese Title</label>
+      <div>
+        <input type="text" data-ng-model="titlePt" id="titlePt"
+                           placeholder="TitlePt" required>
+      </div>
+    </div>
+
+    <div>
+      <label for="type">Type of document</label>
+      <div>
+        <select data-ng-model="type" id="type" name="type" required>
+          <option value="">---Please select---</option>
+          <option value="Article">Article</option>
+          <option value="Document">Document</option>
+          <option value="Review">Review</option>
+          <option value="Tribute">Tribute</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label for="issue">Issue</label>
+      <div>
+        <input type="text" data-ng-model="issue" id="issue"
+                           placeholder="issue" required>
+      </div>
+    </div>
+    <div>
+      <input type="submit">
+    </div>
+    <div data-ng-show="error">
+      <strong data-ng-bind="error"></strong>
+    </div>
+  </form>
+</section>
