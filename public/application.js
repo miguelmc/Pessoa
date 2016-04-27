@@ -1,7 +1,7 @@
 var mainApplicationModuleName = "pessoa";
 
 var mainApplicationModule = angular.module(mainApplicationModuleName,
-                       ['ngResource', 'ngRoute', 'users', 'index', 'entries']);
+                       ['ngResource', 'ngRoute', 'users', 'index', 'entries', 'issues']);
 
 // This makes it indexable by search engine crawlers.
 mainApplicationModule.config(['$locationProvider',

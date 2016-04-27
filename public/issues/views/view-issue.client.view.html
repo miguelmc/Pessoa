@@ -1,0 +1,18 @@
+<section data-ng-controller="IssuesController" data-ng-init="findOne()">
+  <h1 data-ng-bind="issue.issueNumber"></h1>
+  <h1 data-ng-bind="issue.notes"></h1>
+  <h2 data-ng-bind="issue.season"></h1>
+  <h2 data-ng-bind="issue.year"></h1>
+
+  <!-- Probably need to add confirmation on deletion  -->
+  <div data-ng-show="authentication.user">
+    <a href="/#!/issues/{{issue._id}}/edit">edit</a>
+    <a href="#" data-ng-click="delete();">delete</a>
+  </div>
+
+  <small>
+    <em>Added on</em>
+    <em data-ng-bind="issue.created | date:'mediumDate'"></em>
+  </small>
+  
+</section>

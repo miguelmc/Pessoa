@@ -1,0 +1,15 @@
+<section data-ng-controller="IssuesController" data-ng-init="find()">
+  <!-- <h1>Issues</h1> -->
+  <div>
+    <a href="/#!/issues/create">Create new issue</a>
+  </div>
+  <ul>
+    <li data-ng-repeat="issue in issues">
+      <a data-ng-href="#!/issues/{{issue._id}}" data-ng-bind="issue.issueNumber"></a>
+      <br>
+      <small data-ng-bind="issue.season"></small>
+      <small> / </small>
+      <small data-ng-bind="issue.year"></small>
+    </l1>
+  </ul>
+</section>

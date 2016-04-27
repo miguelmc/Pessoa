@@ -1,0 +1,49 @@
+<section data-ng-controller="IssuesController">
+  <h1>New Issue</h1>
+  <form data-ng-submit="create()" novalidate>
+ 
+    <div>
+      <label for="issueNumber">Issue Number</label>
+      <div>
+        <input type="text" data-ng-model="issueNumber" id="issueNumber"
+                           placeholder="IssueNumber" required>
+      </div>
+    </div>
+
+    <div>
+      <label for="notes">Additional information for issue (for example: Jenning's Issue)</label>
+      <div>
+        <input type="text" data-ng-model="notes" id="notes"
+                           placeholder="Aditional Info">
+      </div>
+    </div>
+
+    <div>
+      <label for="season">Season</label>
+      <div>
+        <select data-ng-model="season" id="season" name="season" required>
+          <option value="">---Please select---</option>
+          <option value="Spring">Spring</option>
+          <option value="Summer">Summer</option>
+          <option value="Fall">Fall</option>
+          <option value="Winter">Winter</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label for="year">Year</label>
+      <div>
+        <input type="text" data-ng-model="year" id="year"
+                           placeholder="Enter year" required>
+      </div>
+    </div>
+
+    <div>
+      <input type="submit">
+    </div>
+    <div data-ng-show="error">
+      <strong data-ng-bind="error"></strong>
+    </div>
+  </form>
+</section>
