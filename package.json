@@ -20,6 +20,7 @@
     "express": "latest",
     "express-session": "^1.13.0",
     "method-override": "^2.3.5",
+    "mocha": "^2.4.5",
     "mongoose": "^4.4.8",
     "morgan": "^1.7.0",
     "nodemon": "latest",
