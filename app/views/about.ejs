@@ -25,32 +25,7 @@
       <a href="/#!/issues"><div class="nav">Números<br>Issues</div></a>
     </div>
 
-    <md-content layout-padding id="login-form" >
-    <% for (var i in messages) { %>
-      <div class="flash"><%= messages[i] %></div>
-    <% } %>
-      <form action="/signin" method="post" novalidate>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Username</label>
-          <input name="username" required>
-          <div ng-messages>
-            <div ng-message="required">Enter a username</div>
-          </div>
-        </md-input-container>
-
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Password</label>
-          <input name="password" type="password" required>
-          <div ng-messages>
-            <div ng-message="required">Enter a password</div>
-          </div>
-        </md-input-container>
-        <div class="button-center">
-          <md-button type="submit" class="md-raised md-primary">Sign in</md-button>
-        </div>
-      </form>
-    </md-content>
-
+    <!-- TODO -->
 
     <script type="text/javascript" src="/lib/angular/angular.js"></script>
     <script type="text/javascript" src="/lib/angular-material/angular-material.js"></script>
@@ -59,13 +34,13 @@
     <script type="text/javascript" src="/lib/angular-messages/angular-messages.js"></script>
 
     <script>
-        var signInModuleName = "signin";
+        var aboutModuleName = "about";
 
-        var signInModule = angular.module(signInModuleName,
+        var aboutModule = angular.module(aboutModuleName,
                               ['ngMaterial']);
 
         angular.element(document).ready(function() {
-          angular.bootstrap(document, [signInModuleName]);
+          angular.bootstrap(document, [aboutModuleName]);
         });
     </script>
   </body>

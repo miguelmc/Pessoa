@@ -32,6 +32,10 @@ var getErrorMessage = function(err) {
   return message;
 };
 
+exports.temp = function(req, res) {
+  console.log(req.body);
+  res.render("/")
+}
 
 // Middleware that checks if user is authenticated.
 exports.requiresAdmin = function(req, res, next) {
