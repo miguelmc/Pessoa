@@ -1,5 +1,6 @@
 module.exports = {
   // Development configuration options
   sessionSecret: 'developmentSessionSecret',
-  db: 'mongodb://localhost/pessoa'
+  db: 'mongodb://localhost/pessoa',
+  port: 8080
 }
