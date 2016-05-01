@@ -1,13 +1,11 @@
-<section data-ng-controller="IssuesController" data-ng-init="find()">
+<section data-ng-controller="IssuesController" data-ng-init="find()" id="content">
   <!-- <h1>Issues</h1> -->
-  <div>
-    <a href="/#!/issues/create">Create new issue</a>
-  </div>
-  <ul>
-    <li data-ng-repeat="issue in issues">
-    <p data-ng-href="#!/issues/{{issue._id}}">Número {{issue.issueNumber}}, {{issue.season}} de {{issue.year}}</p>
+  <md-button href="/#!/issues/create">Create new issue</md-button>
+  <ul id="issue-list">
+    <li data-ng-repeat="issue in issues" id="single-issue">
+      <h1 data-ng-href="#!/issues/{{issue._id}}">Número {{issue.issueNumber}}, {{issue.season}} de {{issue.year}}</h1>
 
-    <p data-ng-href="#!/issues/{{issue._id}}">Issue {{issue.issueNumber}}, {{issue.season}} de {{issue.year}}</p>
+      <h1 data-ng-href="#!/issues/{{issue._id}}">Issue {{issue.issueNumber}}, {{issue.season}} de {{issue.year}}</h1>
     </l1>
   </ul>
 </section>

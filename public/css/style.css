@@ -16,6 +16,9 @@ a, a:visited {
   color: #f58548;
 }
 
+h1 {
+  font-size: 30px;
+}
 
 
 /* TOP BAR STYLING */
@@ -55,16 +58,37 @@ a, a:visited {
   border-bottom: 4px solid #f58548;
 }
 
+#add-article {
+  float: right;
+  text-align: left;
+}
 
 
 /* BODY CONTENT STYLING */
 #content {
-  margin-top: 84px;
+  /*margin-top: 84px;*/
+  margin: auto;
+  width: 70%;
 }
 
 #new-issue-form {
   margin: auto;
-  width: 50%;
+  width: 80%;
+}
+
+#issue-list {
+  padding-right: 2em;
+  text-align: right;
+  list-style-type: none;
+}
+
+#single-entry{
+  margin: auto;
+  width: 90%;
+  float: right;
+  border: 5px;
+  border-top: 5px groove threedface;
+  padding: 3em 0;
 }
 
 #login-form {

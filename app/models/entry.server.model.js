@@ -22,7 +22,7 @@ var EntrySchema = new Schema({
   type: {
     type: String,
     enum: ['Article', 'Document', "Review", "Tribute"],
-    required: true
+    required: 'Type of entry is required'
   },
   issue: {
     type: Schema.ObjectId,

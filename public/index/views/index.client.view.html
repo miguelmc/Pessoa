@@ -1,26 +1,24 @@
-<section ng-controller=IndexController>
-  <div id="content">
-    <div id="mygallery" class="stepcarousel" id="slides_control">
-      <ul rn-carousel rn-carousel-auto-slide rn-carousel-controls rn-carousel-controls-allow-loop class="image">
-        <li ng-repeat="slide in slides">
-          <img id="carousel-img" ng-src="{{slide.image}}">
-          <!-- TODO: This doesn't show-->
-          <h1>HOLAAAAAAAAAAAAA</h1>
-        </li>
+<section ng-controller=IndexController id="home-content">
+  <div id="mygallery" class="stepcarousel" id="slides_control">
+    <ul rn-carousel rn-carousel-auto-slide rn-carousel-controls rn-carousel-controls-allow-loop class="image">
+      <li ng-repeat="slide in slides">
+        <img id="carousel-img" ng-src="{{slide.image}}">
+        <!-- TODO: This doesn't show-->
+        <h1>HOLAAAAAAAAAAAAA</h1>
+      </li>
 
-        <!-- TODO: This doesn't work nor show-->
-        <div id="indicators" rn-carousel-indicators ng-if="slides.length > 1" slides="slides" rn-carousel-index="carouselIndex"></div>
-      </ul>
-    </div>
-    <div class="box">
-      <div class="container-1">
-        <span class="icon"><i class="fa fa-search"></i></span>
-        <input type="search" id="search" placeholder="Search..." />
-      </div>
-    </div>
-
-    <p id="advanced-search"><a href="/">Advanced Search | Busca Avancada</a></p>
+      <!-- TODO: This doesn't work nor show-->
+      <div id="indicators" rn-carousel-indicators ng-if="slides.length > 1" slides="slides" rn-carousel-index="carouselIndex"></div>
+    </ul>
   </div>
+  <div class="box">
+    <div class="container-1">
+      <span class="icon"><i class="fa fa-search"></i></span>
+      <input type="search" id="search" placeholder="Search..." />
+    </div>
+  </div>
+
+  <p id="advanced-search"><a href="/">Advanced Search | Busca Avancada</a></p>
 
   <div data-ng-show="!authentication.user" >
     <p>Admin? <a href="/signin">Sign in</a></p>

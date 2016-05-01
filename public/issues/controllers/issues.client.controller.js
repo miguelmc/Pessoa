@@ -6,7 +6,21 @@ angular.module('issues').controller('IssuesController',
       $scope.issueNumber = 5 // TODO: Defaults to last issue
       // TODO: Translate season to portuguese
 
+      $scope.articles = [{id: 'article1', titleEn: 'Entry 1', keywordsEn: [], keywordsPt: []}];
+      $scope.addNewArticle = function() {
+        var newArticleNo = $scope.articles.length+1;
+        $scope.articles.push({'id':'article'+newArticleNo,
+                              titleEn: 'Entry ' + newArticleNo,
+                              keywordsEn: [], keywordsPt: []});
+      }
+
+      $scope.removeArticle = function(item) {
+        $scope.articles.splice(item, 1);
+      };
+
+
       $scope.create = function() {
+        console.log($scope.articles);
         // TODO: See whats up with img, pdf storage
         var issue = new Issues({
           issueNumber: this.issueNumber,

@@ -11,7 +11,7 @@ var IssueSchema = new Schema({
   },
   season: {
     type: String,
-    required: true,
+    required: 'Issue\'s season is required',
     enum: ['Spring', 'Summer', "Fall", 'Winter']
   },
   year: {

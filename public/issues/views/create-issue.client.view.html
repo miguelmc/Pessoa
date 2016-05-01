@@ -1,4 +1,4 @@
-<section data-ng-controller="IssuesController">
+<section data-ng-controller="IssuesController" id="content">
   <h1>New Issue</h1>
   <md-content layout-padding id="new-issue-form" >
     <form name="newIssue" data-ng-submit="create()" novalidate>
@@ -39,11 +39,89 @@
         </div>
       </md-input-container>
 
-      <div>
+      <div id="new-article">
+        <ul id="new-article-list">
+        </ul>
+      </div>
+
+      <h2>Issue's entries</h2>
+
+      <fieldset data-ng-repeat="article in articles" id="single-entry">
+        <h3 ng-bind="article.titleEn"></h3>
+
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Author</label>
+            <input data-ng-model="article.author" required>
+            <div ng-messages>
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Type of document</label>
+            <md-select ng-model="article.type" required>
+              <md-option value="">---Please select---</md-option>
+              <md-option value="Article">Article</md-option>
+              <md-option value="Document">Document</md-option>
+              <md-option value="Review">Review</md-option>
+              <md-option value="Tribute">Tribute</md-option>
+            </md-select>
+            <div ng-messages>
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
+        </div>
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>English Title</label>
+          <input data-ng-model="article.titleEn" required>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Portuguese Title</label>
+          <input data-ng-model="article.titlePt" required>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Issue it belongs to</label>
+          <input ng-model="article.issue" type="number" step="1" required>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Abstract</label>
+          <textarea name="abstract" ng-model="article.abstractDesc" required></textarea>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+
+        <h2 class="md-title">Portuguese Keywords</h2>
+        <md-chips ng-model="article.keywordsPt" readonly="false"></md-chips>
+
+        <h2 class="md-title">English Keywords</h2>
+        <md-chips ng-model="article.keywordsEn" readonly="false"></md-chips>
+
+        <md-button class="md-raised md-warn remove" ng-show="!$first" ng-click="removeArticle($index)">Remove</button>
+      </fieldset>
+
+      
+      <div id="add-article">
+        <md-button class="md-primary" data-ng-click="addNewArticle()">+ Add entry</md-button>
+
         <md-button type="submit" class="md-raised">Submit</md-button>
       </div>
       <div data-ng-show="error">
-        <strong data-ng-bind="error"></strong>
+        <strong class="flash" data-ng-bind="error"></strong>
       </div>
     </form>
   </md-content>
