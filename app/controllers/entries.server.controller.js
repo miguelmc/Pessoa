@@ -26,7 +26,7 @@ exports.create = function(req, res, next) {
 };
 
 exports.list = function(req, res, next) {
-  Entry.find({}, function(err, entries){
+  Entry.find(req.query, function(err, entries){
     if (err) {
       return res.status(400).send({
         message: getErrorMessage(err)

@@ -2,10 +2,10 @@
   <!-- <h1>Issues</h1> -->
   <md-button href="/#!/issues/create">Create new issue</md-button>
   <ul id="issue-list">
-    <li data-ng-repeat="issue in issues" id="single-issue">
-      <h1 data-ng-href="#!/issues/{{issue._id}}">Número {{issue.issueNumber}}, {{issue.season}} de {{issue.year}}</h1>
+    <li data-ng-repeat="issue in issues" class="single-issue">
+      <a href="/#!/issues/{{issue._id}}">Número {{issue.issueNumber}}, {{seasons[issue.season]}} de {{issue.year}}</a> / 
 
-      <h1 data-ng-href="#!/issues/{{issue._id}}">Issue {{issue.issueNumber}}, {{issue.season}} de {{issue.year}}</h1>
+      <a href="/#!/issues/{{issue._id}}">Issue {{issue.issueNumber}}, {{issue.season}} {{issue.year}}</a>
     </l1>
   </ul>
 </section>

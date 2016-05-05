@@ -1,4 +1,7 @@
 /* BASE STYLING */
+html {
+  background: transparent;
+}
 body {
   margin: 0;
   padding: 0;
@@ -18,6 +21,14 @@ a, a:visited {
 
 h1 {
   font-size: 30px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.center {
+  text-align: center;
 }
 
 
@@ -59,10 +70,8 @@ h1 {
 }
 
 #add-article {
-  float: right;
-  text-align: left;
+  text-align: right;
 }
-
 
 /* BODY CONTENT STYLING */
 #content {
@@ -76,11 +85,10 @@ h1 {
   width: 80%;
 }
 
-#issue-list {
+#issue-list, #entry-list{
   padding-right: 2em;
   text-align: right;
-  list-style-type: none;
-}
+}class="center"
 
 #single-entry{
   margin: auto;
@@ -91,11 +99,30 @@ h1 {
   padding: 3em 0;
 }
 
+#single-entry2{
+  margin: auto;
+  width: 90%;
+  border: 5px;
+  text-align: right;
+  padding: 3em 0;
+}
+
 #login-form {
   margin: auto;
   width: 30%;
   margin-top: 100px;
 }
+
+.abstract {
+  text-align: left;
+  display: block;
+}
+
+
+/*.abstract li {
+  display: inline-block;
+  padding-right: 20px;
+}*/
 
 .button-center {
   text-align: center;

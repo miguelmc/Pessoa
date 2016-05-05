@@ -29,12 +29,16 @@ var EntrySchema = new Schema({
     ref: 'Issue'
     // required: true
   },
-  abstractDesc: {
+  abstractDescEn: {
     type: String,
-    required: 'Please add and abstract'
+    required: 'Please add an abstract in English'
   },
-  keywordsEn: [String], // TODO: Keywords are added to the abstract, will need a pre
-  keywordsPt: [String], // TODO: Keywords are added to the abstract, will need a pre
+  abstractDescPt: {
+    type: String,
+    required: 'Please add an abstract in Portuguese'
+  },
+  keywordsEn: [String],
+  keywordsPt: [String],
   pdf: Buffer, // Will probably need something more robust, like GridFS
   images: [
   {

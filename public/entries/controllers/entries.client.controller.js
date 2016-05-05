@@ -4,6 +4,16 @@ angular.module('entries').controller('EntriesController',
       $scope.authentication = Authentication;
       $scope.keywordsEn = [];
       $scope.keywordsPt = [];
+      $scope.issue = 1; // TODO: default to last issue created
+
+      $scope.toggleAbstract = function(index) {
+        var abs = $(".abstract").eq(index);
+        if (abs.css("display") == "none") {
+          abs.css("display", "inherit");
+        } else {
+          abs.css("display", "none");
+        }
+      }
 
       $scope.create = function() {
         // TODO: See whats up with img, pdf storage
@@ -26,7 +36,10 @@ angular.module('entries').controller('EntriesController',
       };
 
       $scope.find = function() {
-        $scope.entries = Entries.query();
+        // Hack, but it works!
+        $scope.title = $location.search().type + 's';
+
+        $scope.entries = Entries.query($location.search());
       };
 
       $scope.findOne = function() {
@@ -53,6 +66,7 @@ angular.module('entries').controller('EntriesController',
             }
           });
         } else {
+          console.log($scope.entry);
           $scope.entry.$remove(function() {
             $location.path('entries');
           });

@@ -17,12 +17,13 @@
   <body>
     <div id="top-bar">
       <a href="/#!/"><img src="img/logo.png" title="Pessoa Plural"></a>
-      <a href="/about"><div class="nav">Sobre<br>About</div></a>
-      <a href="/#!/"><div class="nav">Tributos<br>Tributes</div></a>
-      <a href="/#!/"><div class="nav">Críticas<br>Reviews</div></a>
-      <a href="/#!/"><div class="nav">Documentos<br>Documents</div></a>
-      <a href="articles.html"><div class="nav">Artigos<br>Articles</div></a>
+      <a href="/#!/"><div class="nav">Sobre<br>About</div></a>
+      <a href="/#!/entries?type=Tribute"><div class="nav">Tributos<br>Tributes</div></a>
+      <a href="/#!/entries?type=Review"><div class="nav">Críticas<br>Reviews</div></a>
+      <a href="/#!/entries?type=Document"><div class="nav">Documentos<br>Documents</div></a>
+      <a href="/#!/entries?type=Article"><div class="nav">Artigos<br>Articles</div></a>
       <a href="/#!/issues"><div class="nav">Números<br>Issues</div></a>
+      <a href="/#!/"><div class="nav">Autores<br>Authors</div></a>
     </div>
 
     <md-content layout-padding id="login-form" >
@@ -32,7 +33,7 @@
       <form action="/signin" method="post" novalidate>
         <md-input-container class="md-block" flex-gt-sm>
           <label>Username</label>
-          <input name="username" required>
+          <input name="username" id="username-box"required>
           <div ng-messages>
             <div ng-message="required">Enter a username</div>
           </div>
@@ -66,6 +67,10 @@
 
         angular.element(document).ready(function() {
           angular.bootstrap(document, [signInModuleName]);
+        });
+
+        $(function() {
+          $("#username-box").focus();
         });
     </script>
   </body>

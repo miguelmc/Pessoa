@@ -6,7 +6,10 @@ var IssueSchema = new Schema({
     type: Number,
     required: 'Issue number cannot be empty.'
   },
-  notes: {
+  notesEn: {
+    type: String
+  },
+  notesPt: {
     type: String
   },
   season: {

@@ -1,8 +1,16 @@
 <section data-ng-controller="IssuesController" data-ng-init="findOne()" id="content">
-  <h1 data-ng-bind="issue.issueNumber"></h1>
-  <h1 data-ng-bind="issue.notes"></h1>
-  <h2 data-ng-bind="issue.season"></h1>
-  <h2 data-ng-bind="issue.year"></h1>
+  <h1>
+    Issue {{issue.issueNumber}}, 
+    {{issue.season}} 
+    {{issue.year}} 
+    <span ng-show="issue.notesEn">({{issue.notesEn}})</span>
+  </h1>
+  <h1>
+    Numero {{issue.issueNumber}}, 
+    {{seasons[issue.season]}}
+    de {{issue.year}} 
+    <span ng-show="issue.notesPt">({{issue.notesPt}})</span>
+  </h1>
 
   <!-- Probably need to add confirmation on deletion  -->
   <div data-ng-show="authentication.user">
@@ -14,5 +22,130 @@
     <em>Added on</em>
     <em data-ng-bind="issue.created | date:'mediumDate'"></em>
   </small>
+
+  <hr>
+  <h2>Artigos / Articles</h2>
+  <ul id="entry-list">
+    <li data-ng-repeat="entry in entries" id="single-entry2">
+      <div data-ng-if="entry.type == 'Article'">
+        <h2>{{entry.author}}</h2>
+        <h3>{{entry.titleEn}}</h3>
+        <h3>[{{entry.titlePt}}]</h3>
+        <a href="#"> Link to pdf / </a>
+        <a href="#"> Link to images /</a>
+        <md-button ng-click="toggleAbstract($index)"> Toogle abstract </md-button>
+        <div class="abstract" style="display:none">
+          <p><strong>Keywords: </strong>
+            <span ng-repeat="word in entry.keywordsEn">{{word}}<span data-ng-show="!$last">, </span></span>
+          </p>
+          <p>{{entry.abstractDescEn}}</p>
+          <p><strong>Palavras-chave: </strong>
+            <span ng-repeat="word in entry.keywordsPt">{{word}}<span data-ng-show="!$last">, </span></span>
+          </p>
+          <p>{{entry.abstractDescPt}}</p>
+        </div>
+
+        <!-- Probably need to add confirmation on deletion  -->
+        <div data-ng-show="authentication.user">
+          <a href="/#!/entries/{{entry._id}}/edit">edit</a>
+          <a href="#" data-ng-click="delete();">delete</a>
+        </div>
+      <div>
+    </l1>
+  </ul>
+
+  <hr>
+  <h2>Documentos / Documents</h2>
+  <ul id="entry-list">
+    <li data-ng-repeat="entry in entries" id="single-entry2">
+      <div data-ng-if="entry.type == 'Document'">
+        <h2>{{entry.author}}</h2>
+        <h3>{{entry.titleEn}}</h3>
+        <h3>[{{entry.titlePt}}]</h3>
+        <a href="#"> Link to pdf / </a>
+        <a href="#"> Link to images /</a>
+        <md-button ng-click="toggleAbstract($index)"> Toogle abstract </md-button>
+        <div class="abstract" style="display:none">
+          <strong>Keywords:</strong> <ul>
+            <li ng-repeat="word in entry.keywordsPt">{{word}}</li>
+          </ul>
+          <p>{{entry.abstractDesc}}</p>
+          <strong>Palavras-chave:</strong> <ul>
+            <li ng-repeat="word in entry.keywordsEn">{{word}}</li>
+          </ul>
+          <p>{{entry.abstractDesc}}</p>
+        </div>
+
+        <!-- Probably need to add confirmation on deletion  -->
+        <div data-ng-show="authentication.user">
+          <a href="/#!/entries/{{entry._id}}/edit">edit</a>
+          <a href="#" data-ng-click="delete();">delete</a>
+        </div>
+      <div>
+    </l1>
+  </ul>
+
+  <hr>
+  <h2>Criticas / Reviews</h2>
+  <ul>
+    <li data-ng-repeat="entry in entries" id="single-entry2">
+      <div data-ng-if="entry.type == 'Review'">
+        <h2>{{entry.author}}</h2>
+        <h3>{{entry.titleEn}}</h3>
+        <h3>[{{entry.titlePt}}]</h3>
+        <a href="#"> Link to pdf / </a>
+        <a href="#"> Link to images /</a>
+        <md-button ng-click="toggleAbstract($index)"> Toogle abstract </md-button>
+        <div class="abstract" style="display:none">
+          <strong>Keywords:</strong> <ul>
+            <li ng-repeat="word in entry.keywordsPt">{{word}}</li>
+          </ul>
+          <p>{{entry.abstractDesc}}</p>
+          <strong>Palavras-chave:</strong> <ul>
+            <li ng-repeat="word in entry.keywordsEn">{{word}}</li>
+          </ul>
+          <p>{{entry.abstractDesc}}</p>
+        </div>
+
+        <!-- Probably need to add confirmation on deletion  -->
+        <div data-ng-show="authentication.user">
+          <a href="/#!/entries/{{entry._id}}/edit">edit</a>
+          <a href="#" data-ng-click="delete();">delete</a>
+        </div>
+      <div>
+    </l1>
+  </ul>
+
+  <hr>
+  <h2>Tributos / Tributes</h2>
+  <ul>
+    <li data-ng-repeat="entry in entries" id="single-entry2">
+      <div data-ng-if="entry.type == 'Tribute'">
+        <h2>{{entry.author}}</h2>
+        <h3>{{entry.titleEn}}</h3>
+        <h3>[{{entry.titlePt}}]</h3>
+        <a href="#"> Link to pdf / </a>
+        <a href="#"> Link to images /</a>
+        <md-button ng-click="toggleAbstract($index)"> Toogle abstract </md-button>
+        <div class="abstract" style="display:none">
+          <strong>Keywords:</strong> <ul>
+            <li ng-repeat="word in entry.keywordsPt">{{word}}</li>
+          </ul>
+          <p>{{entry.abstractDesc}}</p>
+          <strong>Palavras-chave:</strong> <ul>
+            <li ng-repeat="word in entry.keywordsEn">{{word}}</li>
+          </ul>
+          <p>{{entry.abstractDesc}}</p>
+        </div>
+
+        <!-- Probably need to add confirmation on deletion  -->
+        <div data-ng-show="authentication.user">
+          <a href="/#!/entries/{{entry._id}}/edit">edit</a>
+          <a href="#" data-ng-click="delete();">delete</a>
+        </div>
+      <div>
+    </l1>
+  </ul>
+
   
 </section>

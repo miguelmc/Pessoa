@@ -1,17 +1,27 @@
-<section data-ng-controller="EntriesController" data-ng-init="findOne()">
-  <h1>{{entry.author}}</h1>
-  <h2>{{entry.titleEn}}</h1>
-  <h2>[{{entry.titlePt}}]</h1>
+<section data-ng-controller="EntriesController" data-ng-init="findOne()" id="content">
+  <h1 class="center">{{entry.author}}</h1>
+  <h2 class="center">{{entry.titleEn}}</h1>
+  <h2 class="center">[{{entry.titlePt}}]</h1>
   <a href="#"> Link to pdf / </a>
-  <a href="#"> Link to images /</a>
-  <a href="#"> Toogle abstract </a>
+  <a href="#"> Link to images</a>
+
+
+  <h2>Abstract</h1>
+  <p><strong>Keywords:</strong>
+    <span ng-repeat="word in entry.keywordsEn">{{word}}<span data-ng-show="!$last">, </span></span>
+  </p>
   <p>{{entry.abstractDesc}}</p>
-  <p>{{entry.keywordsPt}}</p>
-  <p>{{entry.keywordsEn}}</p>
-  <h3 data-ng-bind="entry.type"></h1>
+
+  <h2>Resumo</h1>
+  <p><strong>Palavras-chave:</strong>
+    <span ng-repeat="word in entry.keywordsPt">{{word}}<span data-ng-show="!$last">, </span></span>
+  <p>{{entry.abstractDesc}}</p>
+  </p>
+
+  <h3 data-ng-bind="entry.type"></h3>
 
   <!-- TODO: Populate issue in mongo -->
-  <h3 data-ng-bind="entry.issue"></h1> 
+  <h3 data-ng-bind="entry.issue"></h3> 
 
   <small>
     <em>Posted on</em>
@@ -19,9 +29,9 @@
   </small>
 
   <!-- Probably need to add confirmation on deletion  -->
-  <div data-ng-show="authentication.user">
-    <a href="/#!/entries/{{entry._id}}/edit">edit</a>
-    <a href="#" data-ng-click="delete();">delete</a>
+  <div data-ng-show="authentication.user" layout-gt-sm="row">
+    <md-button href="/#!/entries/{{entry._id}}/edit">Edit</md-button>
+    <md-button class="md-warn" data-ng-click="delete();">Delete</md-button>
   </div>
 
   

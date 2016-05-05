@@ -14,7 +14,7 @@
 
         <md-input-container class="md-block" flex-gt-sm>
           <label>Additional information for issue (for example: Jenning's Issue)</label>
-          <input data-ng-model="notes">
+          <input data-ng-model="notesEn">
         </md-input-container>
       </div>
 
@@ -89,27 +89,27 @@
           </div>
         </md-input-container>
 
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Issue it belongs to</label>
-          <input ng-model="article.issue" type="number" step="1" required>
-          <div ng-messages>
-            <div ng-message="required">This is required.</div>
-          </div>
-        </md-input-container>
+        <h2 class="md-title">English Keywords (Press enter after each keyword)</h2>
+        <md-chips ng-model="article.keywordsEn" readonly="false"></md-chips>
 
         <md-input-container class="md-block" flex-gt-sm>
           <label>Abstract</label>
-          <textarea name="abstract" ng-model="article.abstractDesc" required></textarea>
+          <textarea name="abstractDescEn" data-ng-model="article.abstractDescEn" required></textarea>
           <div ng-messages>
             <div ng-message="required">This is required.</div>
           </div>
         </md-input-container>
 
-        <h2 class="md-title">Portuguese Keywords</h2>
+        <h2 class="md-title">Portuguese Keywords (Press enter after each keyword)</h2>
         <md-chips ng-model="article.keywordsPt" readonly="false"></md-chips>
 
-        <h2 class="md-title">English Keywords</h2>
-        <md-chips ng-model="article.keywordsEn" readonly="false"></md-chips>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Abstract</label>
+          <textarea name="abstractDescPt" data-ng-model="article.abstractDescPt" required></textarea>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
 
         <md-button class="md-raised md-warn remove" ng-show="!$first" ng-click="removeArticle($index)">Remove</button>
       </fieldset>
@@ -120,7 +120,7 @@
 
         <md-button type="submit" class="md-raised">Submit</md-button>
       </div>
-      <div data-ng-show="error">
+      <div data-ng-show="error" class="put-center">
         <strong class="flash" data-ng-bind="error"></strong>
       </div>
     </form>

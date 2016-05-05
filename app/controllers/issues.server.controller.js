@@ -13,6 +13,7 @@ var getErrorMessage = function(err) {
 
 exports.create = function(req, res, next) {
   var issue = new Issue(req.body);
+  //issue._id = req.body.issue;
 
   issue.save(function(err) {
     if (err) {
