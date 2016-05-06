@@ -1,6 +1,6 @@
 $(document).ready(function() {
   $.get('/search/' + $(document).find("title").text(), function(results) {
-    results = parseJSON(results);
+    //results = parseJSON(results);
     if (results.length > 0) {
       for (var i = 0; i < results.length; i++) {
         var artName = results[i].title
