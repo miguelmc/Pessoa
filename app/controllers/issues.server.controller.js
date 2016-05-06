@@ -1,4 +1,6 @@
-var Issue = require('mongoose').model('Issue');
+var fs = require('fs'),
+    db = require('../../config/mongoose'),
+    Issue = db.model('Issue');
 
 var getErrorMessage = function(err) {
   if (err.errors) {
@@ -21,12 +23,24 @@ exports.create = function(req, res, next) {
         message: getErrorMessage(err)
       });
     } else {
+      var writeStream = db.gfs.createWriteStream(
+        {
+          filename: 'pessoa1.jpg'
+          //_id: issue._id 
+        }
+      );
+      fs.createReadStream('public/img/pessoa1.jpg').pipe(writeStream);
+      writeStream.on('close', function (file) {
+        console.log("Wrote file:" + file.filename);
+      });
+
       res.json(issue);
     }
   });
 };
 
 exports.list = function(req, res, next) {
+  // console.log(db.gfs);
   Issue.find({}, function(err, issues){
     if (err) {
       return res.status(400).send({
@@ -39,6 +53,14 @@ exports.list = function(req, res, next) {
 };
 
 exports.read = function(req, res) {
+  var fs_write_stream = fs.createWriteStream('pessoa_back.jpg');
+  var readstream = db.gfs.createReadStream(
+    {
+      filename: 'pessoa1.jpg'
+      //_id: req.issue._id 
+    }
+  );
+  readstream.pipe(fs_write_stream);
   res.json(req.issue);
 }
 

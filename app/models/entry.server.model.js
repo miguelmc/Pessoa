@@ -1,7 +1,8 @@
 // Entry schema.
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    db = require('../../config/mongoose');
 
 var EntrySchema = new Schema({
   // Might need to make an Author model

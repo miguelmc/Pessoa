@@ -1,4 +1,5 @@
-var Entry = require('mongoose').model('Entry');
+var db = require('../../config/mongoose'),
+    Entry = db.model('Entry');
 
 var getErrorMessage = function(err) {
   if (err.errors) {

@@ -4,7 +4,8 @@
  * is provided if needed in the future.
  */
 
-var User = require('mongoose').model('User'),
+var db = require('../../config/mongoose'),
+    User = db.model('User'),
     passport = require('passport');
 
 var getErrorMessage = function(err) {
