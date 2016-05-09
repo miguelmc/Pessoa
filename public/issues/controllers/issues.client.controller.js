@@ -1,10 +1,9 @@
 angular.module('issues').controller('IssuesController',
-  ['$scope', '$routeParams', '$location', 'Authentication', 'Issues', 'Entries',
-    function($scope, $routeParams, $location, Authentication, Issues, Entries) {
+  ['$scope', '$routeParams', '$location', '$timeout', 'Upload', 'Authentication', 'Issues', 'Entries',
+    function($scope, $routeParams, $location, $timeout, Upload, Authentication, Issues, Entries) {
       $scope.authentication = Authentication;
       $scope.year = 2016 // TODO: Defaults to current year
       $scope.issueNumber = 5 // TODO: Defaults to last issue
-      // TODO: Translate season to portuguese
       $scope.seasons = {
         'Summer': 'verão',
         'Fall': 'outono',
@@ -12,12 +11,42 @@ angular.module('issues').controller('IssuesController',
         'Spring': 'primavera'
       }
 
+      $scope.files = [];
+
       $scope.articles = [{id: 'article1', titleEn: 'Entry 1', keywordsEn: [], keywordsPt: []}];
       $scope.addNewArticle = function() {
         var newArticleNo = $scope.articles.length+1;
         $scope.articles.push({'id':'article'+newArticleNo,
                               titleEn: 'Entry ' + newArticleNo,
                               keywordsEn: [], keywordsPt: []});
+      }
+
+      $scope.addFiles = function(files, errFiles) {
+        console.log(files);
+        console.log(errFiles);
+        $scope.files = files;
+        $scope.errFiles = errFiles;
+      }
+      
+      $scope.uploadFiles = function(/*files, errFiles*/) {
+          angular.forEach($scope.files, function(file) {
+              file.upload = Upload.upload({
+                  url: 'file',
+                  data: {file: file}
+              });
+
+              file.upload.then(function (response) {
+                  $timeout(function () {
+                      file.result = response.data;
+                  });
+              }, function (response) {
+                  if (response.status > 0)
+                      $scope.errorMsg = response.status + ': ' + response.data;
+              }, function (evt) {
+                  file.progress = Math.min(100, parseInt(100.0 * 
+                                          evt.loaded / evt.total));
+              });
+          });
       }
 
       $scope.removeArticle = function(item) {
@@ -34,6 +63,7 @@ angular.module('issues').controller('IssuesController',
       }
 
       $scope.create = function() {
+        $scope.uploadFiles();
         // TODO: See whats up with img, pdf storage
         var newIssue = new Issues({
           issueNumber: this.issueNumber,

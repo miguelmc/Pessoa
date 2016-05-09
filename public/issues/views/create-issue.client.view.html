@@ -39,6 +39,23 @@
         </div>
       </md-input-container>
 
+      <md-input-container class="md-block" flex-gt-sm>
+        <button ngf-select="addFiles($files, $invalidFiles)" multiple
+          accept="image/*"> <!--ngf-max-height="1000" ngf-max-size="1MB">-->
+          Select Files</button>
+          <ul>
+            <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$errorParam}}
+            <span class="progress" ng-show="f.progress >= 0">
+              <div style="width:{{f.progress}}%"  
+                ng-bind="f.progress + '%'"></div>
+            </span>
+            Image thumbnail: <img ngf-thumbnail="f || '/thumb.jpg'">
+            </li>
+            <li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+            </li> 
+          </ul>
+      </md-input-container>
+
       <div id="new-article">
         <ul id="new-article-list">
         </ul>

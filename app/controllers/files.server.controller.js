@@ -12,8 +12,7 @@ exports.upload = function(req, res) {
     var writeStream = db.gfs.createWriteStream({
       _id: fileId,
       filename: filename,
-      mode: 'w',
-      content_type: mimetype,
+      mode: 'w'
     });
     file.pipe(writeStream);
   }).on('finish', function() {
