@@ -1,21 +1,21 @@
 <section data-ng-controller="IssuesController" data-ng-init="findOne()" id="content">
   <h1>
-    Issue {{issue.issueNumber}}, 
-    {{issue.season}} 
-    {{issue.year}} 
+    Issue {{issue.issueNumber}},
+    {{issue.season}}
+    {{issue.year}}
     <span ng-show="issue.notesEn">({{issue.notesEn}})</span>
   </h1>
   <h1>
-    Numero {{issue.issueNumber}}, 
+    Numero {{issue.issueNumber}},
     {{seasons[issue.season]}}
-    de {{issue.year}} 
+    de {{issue.year}}
     <span ng-show="issue.notesPt">({{issue.notesPt}})</span>
   </h1>
 
   <!-- Probably need to add confirmation on deletion  -->
   <div data-ng-show="authentication.user">
     <a href="/#!/issues/{{issue._id}}/edit">edit</a>
-    <a href="#" data-ng-click="delete();">delete</a>
+    <a href="#" data-ng-click="delete(); $event.preventDefault();">delete</a>
   </div>
 
   <small>
@@ -48,7 +48,7 @@
         <!-- Probably need to add confirmation on deletion  -->
         <div data-ng-show="authentication.user">
           <a href="/#!/entries/{{entry._id}}/edit">edit</a>
-          <a href="#" data-ng-click="delete();">delete</a>
+          <a href="#" data-ng-click="delete(); $event.preventDefault();">delete</a>
         </div>
       <div>
     </l1>
@@ -79,7 +79,7 @@
         <!-- Probably need to add confirmation on deletion  -->
         <div data-ng-show="authentication.user">
           <a href="/#!/entries/{{entry._id}}/edit">edit</a>
-          <a href="#" data-ng-click="delete();">delete</a>
+          <a href="#" data-ng-click="delete(); $event.preventDefault();">delete</a>
         </div>
       <div>
     </l1>
@@ -110,7 +110,7 @@
         <!-- Probably need to add confirmation on deletion  -->
         <div data-ng-show="authentication.user">
           <a href="/#!/entries/{{entry._id}}/edit">edit</a>
-          <a href="#" data-ng-click="delete();">delete</a>
+          <a href="#" data-ng-click="delete(); $event.preventDefault();">delete</a>
         </div>
       <div>
     </l1>
@@ -141,11 +141,11 @@
         <!-- Probably need to add confirmation on deletion  -->
         <div data-ng-show="authentication.user">
           <a href="/#!/entries/{{entry._id}}/edit">edit</a>
-          <a href="#" data-ng-click="delete();">delete</a>
+          <a href="#" data-ng-click="delete(); $event.preventDefault();">delete</a>
         </div>
       <div>
     </l1>
   </ul>
 
-  
+
 </section>

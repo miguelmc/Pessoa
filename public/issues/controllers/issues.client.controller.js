@@ -1,8 +1,8 @@
 angular.module('issues').controller('IssuesController',
-  ['$scope', '$routeParams', '$location', '$timeout', 'Upload', 'Authentication', 'Issues', 'Entries',
-    function($scope, $routeParams, $location, $timeout, Upload, Authentication, Issues, Entries) {
+  ['$scope', '$window', '$routeParams', '$location', '$timeout', 'Upload', 'Authentication', 'Issues', 'Entries',
+    function($scope, $window, $routeParams, $location, $timeout, Upload, Authentication, Issues, Entries) {
       $scope.authentication = Authentication;
-      $scope.year = 2016 // TODO: Defaults to current year
+      $scope.year = (new Date()).getFullYear();
       $scope.issueNumber = 5 // TODO: Defaults to last issue
       $scope.seasons = {
         'Summer': 'verão',
@@ -134,22 +134,25 @@ angular.module('issues').controller('IssuesController',
       };
 
       $scope.delete = function(issue) {
-        if (issue) {
-          issue.$remove(function() {
-            for (var i in $scope.issues) {
-              if ($scope.issues[i] === issue) {
-                $scope.issues.splice(i, 1);
+        var confirm = $window.confirm("Are you sure you want to delete this?");
+        if (confirm == true) {
+          if (issue) {
+            issue.$remove(function() {
+              for (var i in $scope.issues) {
+                if ($scope.issues[i] === issue) {
+                  $scope.issues.splice(i, 1);
+                }
               }
+            });
+          } else {
+            // Delete articles, then issue.
+            for (var i=0; i<$scope.entries.length; i++) {
+              $scope.entries[i].$remove()
             }
-          });
-        } else {
-          // Delete articles, then issue.
-          for (var i=0; i<$scope.entries.length; i++) {
-            $scope.entries[i].$remove()
+            $scope.issue.$remove(function() {
+              $location.path('issues');
+            });
           }
-          $scope.issue.$remove(function() {
-            $location.path('issues');
-          });
         }
       };
     }
