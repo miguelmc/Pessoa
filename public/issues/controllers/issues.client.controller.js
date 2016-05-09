@@ -1,6 +1,6 @@
 angular.module('issues').controller('IssuesController',
-  ['$scope', '$window', '$routeParams', '$location', '$timeout', 'Upload', 'Authentication', 'Issues', 'Entries',
-    function($scope, $window, $routeParams, $location, $timeout, Upload, Authentication, Issues, Entries) {
+  ['$scope', '$mdDialog', '$routeParams', '$location', '$timeout', 'Upload', 'Authentication', 'Issues', 'Entries',
+    function($scope, $mdDialog, $routeParams, $location, $timeout, Upload, Authentication, Issues, Entries) {
       $scope.authentication = Authentication;
       $scope.year = (new Date()).getFullYear();
       $scope.issueNumber = 5 // TODO: Defaults to last issue
@@ -134,8 +134,12 @@ angular.module('issues').controller('IssuesController',
       };
 
       $scope.delete = function(issue) {
-        var confirm = $window.confirm("Are you sure you want to delete this?");
-        if (confirm == true) {
+        var confirm = $mdDialog.confirm()
+          .title("Are you sure you want to delete this issue?")
+          .textContent("This action cannot be undone.")
+          .ok("Yes, delete.")
+          .cancel("No");
+        $mdDialog.show(confirm).then(function() {
           if (issue) {
             issue.$remove(function() {
               for (var i in $scope.issues) {
@@ -153,7 +157,9 @@ angular.module('issues').controller('IssuesController',
               $location.path('issues');
             });
           }
-        }
+        }, function() {
+          // Do nothing if user cancels delete
+        });
       };
     }
   ]

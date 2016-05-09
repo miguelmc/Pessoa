@@ -1,6 +1,6 @@
 angular.module('entries').controller('EntriesController',
-  ['$scope', '$routeParams', '$location', 'Authentication', 'Entries',
-    function($scope, $routeParams, $location, Authentication, Entries) {
+  ['$scope', '$mdDialog', '$routeParams', '$location', 'Authentication', 'Entries',
+    function($scope, $mdDialog, $routeParams, $location, Authentication, Entries) {
       $scope.authentication = Authentication;
       $scope.keywordsEn = [];
       $scope.keywordsPt = [];
@@ -57,20 +57,27 @@ angular.module('entries').controller('EntriesController',
       };
 
       $scope.delete = function(entry) {
-        if (entry) {
-          entry.$remove(function() {
-            for (var i in $scope.entries) {
-              if ($scope.entries[i] === entry) {
-                $scope.entries.splice(i, 1);
+        var confirm = $mdDialog.confirm()
+          .title("Are you sure you want to delete this issue?")
+          .textContent("This action cannot be undone.")
+          .ok("Yes, delete.")
+          .cancel("No");
+        $mdDialog.show(confirm).then(function() {
+          if (entry) {
+            entry.$remove(function() {
+              for (var i in $scope.entries) {
+                if ($scope.entries[i] === entry) {
+                  $scope.entries.splice(i, 1);
+                }
               }
-            }
-          });
-        } else {
-          console.log($scope.entry);
-          $scope.entry.$remove(function() {
-            $location.path('entries');
-          });
-        }
+            });
+          } else {
+            console.log($scope.entry);
+            $scope.entry.$remove(function() {
+              $location.path('entries');
+            });
+          }
+        }, function() {});
       };
     }
   ]
