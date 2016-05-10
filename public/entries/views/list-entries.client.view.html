@@ -7,18 +7,18 @@
       <h2><a data-ng-href="#!/entries/{{entry._id}}">{{entry.author}}</a></h2>
       <h3>{{entry.titleEn}}</h3>
       <h3>[{{entry.titlePt}}]</h3>
-      <a href="#"> Link to pdf / </a>
-      <a href="#"> Link to images /</a>
-      <md-button ng-click="toggleAbstract($index)"> Toogle abstract </md-button>
+      <div layout-gt-sm="row" layout-align="end center">
+          <md-button ng-show="entry.pdf" class="orangered" href="/file/{{entry.pdf}}">pdf</md-button>
+          <md-button ng-show="entry.images.length>0" class="orangered" href="#!/entries/{{entry._id}}#view-entry-images">Imagens / Images</md-button>
+          <md-button ng-show="entry.abstractDescEn || entry.abstractDescPt || entry.keywordsEn.length>0 || entry.keywordsPt.length>0" class="orangered" ng-click="toggleAbstract($index)">Resumo / Abstract </md-button>
+      </div>
       <div class="abstract" style="display:none">
-        <strong>Keywords:</strong> <ul>
-          <li ng-repeat="word in entry.keywordsPt">{{word}}</li>
-        </ul>
-        <p>{{entry.abstractDesc}}</p>
-        <strong>Palavras-chave:</strong> <ul>
-          <li ng-repeat="word in entry.keywordsEn">{{word}}</li>
-        </ul>
-        <p>{{entry.abstractDesc}}</p>
+        <p><strong>Keywords: </strong>
+          <span ng-repeat="word in entry.keywordsEn">{{word}}<span data-ng-show="!$last">, </span></span>
+        <p>{{entry.abstractDescEn}}</p>
+        <p><strong>Palavras-chave: </strong>
+          <span ng-repeat="word in entry.keywordsPt">{{word}}<span data-ng-show="!$last">, </span></span>
+        <p>{{entry.abstractDescPt}}</p>
       </div>
 
       <!-- Probably need to add confirmation on deletion  -->

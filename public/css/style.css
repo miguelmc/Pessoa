@@ -31,6 +31,24 @@ ul {
   text-align: center;
 }
 
+#entry-image ul {
+  text-align: center;
+}
+
+#entry-image li {
+  vertical-align: top;
+  padding: 1em;
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+  margin: 0;
+  overflow: hidden;
+}
+
+.orangered {
+  color: orangered;
+}
+
 
 /* TOP BAR STYLING */
 #top-bar {

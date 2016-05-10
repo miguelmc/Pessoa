@@ -11,7 +11,7 @@ angular.module('issues').controller('IssuesController',
         'Spring': 'primavera'
       }
 
-      $scope.files = [];
+      // $scope.images= [];
 
       $scope.articles = [{id: 'article1', titleEn: 'Entry 1', keywordsEn: [], keywordsPt: []}];
       $scope.addNewArticle = function() {
@@ -21,32 +21,126 @@ angular.module('issues').controller('IssuesController',
                               keywordsEn: [], keywordsPt: []});
       }
 
-      $scope.addFiles = function(files, errFiles) {
-        console.log(files);
-        console.log(errFiles);
-        $scope.files = files;
-        $scope.errFiles = errFiles;
+      $scope.addIssuePdf = function(files, errFiles) {
+        $scope.pdf = files[0];
+        $scope.errFiles= errFiles;
+      }
+      $scope.addEntryPdf = function(entry, files, errFiles) {
+        entry.pdf = files[0];
+        entry.errFiles= errFiles;
+      }
+
+      $scope.uploadPdf = function(model, pdf) {
+        if (!pdf) return;
+        // issuePdf = $scope.pdf;
+        pdf.upload = Upload.upload({
+            url: 'file',
+            data: {file: pdf}
+        });
+
+        pdf.upload.then(function (response) {
+            $timeout(function () {
+                pdf.result = response.data;
+                model.pdf = pdf.result;
+                model.$update();
+            });
+        }, function (response) {
+            if (response.status > 0)
+                $scope.errorMsg = response.status + ': ' + response.data;
+        }, function (evt) {
+            pdf.progress = Math.min(100, parseInt(100.0 * 
+                                    evt.loaded / evt.total));
+        });
       }
       
-      $scope.uploadFiles = function(/*files, errFiles*/) {
-          angular.forEach($scope.files, function(file) {
-              file.upload = Upload.upload({
-                  url: 'file',
-                  data: {file: file}
-              });
+      /*
+      $scope.uploadPdfs = function(issue, entries) {
+        console.log(entries);
+        issuePdf = $scope.pdf;
+        issuePdf.upload = Upload.upload({
+            url: 'file',
+            data: {file: issuePdf}
+        });
 
-              file.upload.then(function (response) {
-                  $timeout(function () {
-                      file.result = response.data;
-                  });
-              }, function (response) {
-                  if (response.status > 0)
-                      $scope.errorMsg = response.status + ': ' + response.data;
-              }, function (evt) {
-                  file.progress = Math.min(100, parseInt(100.0 * 
-                                          evt.loaded / evt.total));
-              });
+        issuePdf.upload.then(function (response) {
+            $timeout(function () {
+                issuePdf.result = response.data;
+                issue.pdf = issuePdf.result;
+                issue.$update();
+            });
+        }, function (response) {
+            if (response.status > 0)
+                $scope.errorMsg = response.status + ': ' + response.data;
+        }, function (evt) {
+            issuePdf.progress = Math.min(100, parseInt(100.0 * 
+                                    evt.loaded / evt.total));
+        });
+
+        angular.forEach(entries, function(entry) {
+          console.log("-----------");
+          console.log(entry);
+          entryPdf = entry.pdf;
+          entryPdf.upload = Upload.upload({
+              url: 'file',
+              data: {file: entryPdf}
           });
+
+          entryPdf.upload.then(function (response) {
+              $timeout(function () {
+                  entryPdf.result = response.data;
+                  entry.pdf = entryPdf.result;
+                  entry.$update();
+              });
+          }, function (response) {
+              if (response.status > 0)
+                  $article.errorMsg = response.status + ': ' + response.data;
+          }, function (evt) {
+              entryPdf.progress = Math.min(100, parseInt(100.0 * 
+                                      evt.loaded / evt.total));
+          });
+        });
+
+
+      }*/
+
+      $scope.addImages = function(entry, imageFiles, errFiles) {
+        entry.imageFiles = imageFiles;
+        entry.errFiles = errFiles;
+      }
+
+      $scope.uploadImages = function(entry, imageFiles/*files, errFiles*/) {
+        
+        console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+        console.log(entry);
+        console.log(imageFiles);
+        
+        entry.images = []
+        angular.forEach(imageFiles, function(file) {
+            file.upload = Upload.upload({
+                url: 'file',
+                data: {file: file}
+            });
+
+            file.upload.then(function (response) {
+                $timeout(function () {
+                    file.result = response.data;
+                    entry.images.push(file.result);
+
+                    // This should be true only once on the last iteration completion.
+                    if (entry.images.length == imageFiles.length) {
+                      entry.$update();
+                    }
+                });
+            }, function (response) {
+                if (response.status > 0)
+                    $scope.errorMsg = response.status + ': ' + response.data;
+            }, function (evt) {
+                file.progress = Math.min(100, parseInt(100.0 * 
+                                        evt.loaded / evt.total));
+            });
+        });
+
+        $scope.waitForImagesAndSave(entry, imageFiles.length);
       }
 
       $scope.removeArticle = function(item) {
@@ -63,7 +157,6 @@ angular.module('issues').controller('IssuesController',
       }
 
       $scope.create = function() {
-        $scope.uploadFiles();
         // TODO: See whats up with img, pdf storage
         var newIssue = new Issues({
           issueNumber: this.issueNumber,
@@ -72,12 +165,14 @@ angular.module('issues').controller('IssuesController',
           year: this.year
         });
 
+
         // Attempt to save issue.
         newIssue.$save(function(response) {
+          $scope.uploadPdf(newIssue, $scope.pdf);
           // If issue save succeeded, try to save each entry.
+          newEntries = []
           for (var i=0; i < $scope.articles.length; i++) {
             entryData = $scope.articles[i];
-            console.log(entryData);
             var entry = new Entries({
               author: entryData.author,
               type: entryData.type,
@@ -91,7 +186,12 @@ angular.module('issues').controller('IssuesController',
             });
 
             console.log(entry);
+
             entry.$save(function(response) {
+              // newEntries.push(entry);
+              console.log(entryData);
+              $scope.uploadPdf(entry, entryData.pdf);
+              $scope.uploadImages(entry, entryData.imageFiles);
 
             }, function(errorResponse) {
               // TODO: how to make the error show up there?
@@ -100,9 +200,11 @@ angular.module('issues').controller('IssuesController',
               // $location.path('issues/' + response._id + '/edit');
             })
 
-            // All good!
-            $location.path('issues/' + response._id);
           }
+
+
+          // All good!
+          $location.path('issues/' + response._id);
 
         }, function(errorResponse) {
           $scope.error = errorResponse.data.message;
@@ -117,6 +219,7 @@ angular.module('issues').controller('IssuesController',
       $scope.findOne = function() {
         $scope.issue = Issues.get({
           issueId: $routeParams.issueId
+        }, function() {
         });
         $scope.entries = Entries.query({
           issue: $routeParams.issueId

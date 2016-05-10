@@ -14,12 +14,15 @@ var IssueSchema = new Schema({
   },
   season: {
     type: String,
-    required: 'Issue\'s season is required',
-    enum: ['Spring', 'Summer', "Fall", 'Winter']
+    enum: ['Spring', 'Summer', "Fall", 'Winter'],
+    required: 'Issue\'s season is required'
   },
   year: {
     type: Number,
     required: 'Year cannot be empty.'
+  },
+  pdf: {
+    type: Schema.ObjectId,
   },
   created: {
     type: Date,

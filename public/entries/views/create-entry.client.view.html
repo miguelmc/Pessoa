@@ -1,7 +1,7 @@
 <section data-ng-controller="EntriesController" id="content">
   <h1>New Entry</h1>
   <md-content layout-padding id="new-issue-form" >
-    <form data-ng-submit="create()" novalidate>
+    <form name="newEntry" data-ng-submit="newEntry.$valid && create()" novalidate>
   
       <div layout-gt-sm="row">
         <md-input-container class="md-block" flex-gt-sm>

@@ -1,7 +1,7 @@
 <section data-ng-controller="IssuesController" id="content">
   <h1>New Issue</h1>
   <md-content layout-padding id="new-issue-form" >
-    <form name="newIssue" data-ng-submit="create()" novalidate>
+    <form name="newIssue" data-ng-submit="newIssue.$valid && create()" novalidate>
   
       <div layout-gt-sm="row">
         <md-input-container class="md-block" flex-gt-sm>
@@ -40,16 +40,15 @@
       </md-input-container>
 
       <md-input-container class="md-block" flex-gt-sm>
-        <button ngf-select="addFiles($files, $invalidFiles)" multiple
-          accept="image/*"> <!--ngf-max-height="1000" ngf-max-size="1MB">-->
-          Select Files</button>
+        <button ngf-select="addIssuePdf($files, $invalidFiles)" multiple
+          accept="application/pdf"> <!--ngf-max-height="1000" ngf-max-size="1MB">-->
+          Upload issue's main pdf (optional)</button>
           <ul>
-            <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$errorParam}}
-            <span class="progress" ng-show="f.progress >= 0">
-              <div style="width:{{f.progress}}%"  
-                ng-bind="f.progress + '%'"></div>
+            <li style="font:smaller">{{pdf.name}} {{pdf.$errorParam}}
+            <span class="progress" ng-show="pdf.progress >= 0">
+              <div style="width:{{pdf.progress}}%"  
+                ng-bind="pdf.progress + '%'"></div>
             </span>
-            Image thumbnail: <img ngf-thumbnail="f || '/thumb.jpg'">
             </li>
             <li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
             </li> 
@@ -91,6 +90,22 @@
         </div>
 
         <md-input-container class="md-block" flex-gt-sm>
+          <button ngf-select="addEntryPdf(article, $files, $invalidFiles)" multiple
+            accept="application/pdf"> <!--ngf-max-height="1000" ngf-max-size="1MB">-->
+            Upload pdf</button>
+            <ul>
+              <li style="font:smaller">{{article.pdf.name}} {{article.pdf.$errorParam}}
+              <span class="progress" ng-show="article.pdf.progress >= 0">
+                <div style="width:{{article.pdf.progress}}%"  
+                  ng-bind="article.pdf.progress + '%'"></div>
+              </span>
+              </li>
+              <li ng-repeat="f in article.errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+              </li> 
+            </ul>
+        </md-input-container>
+
+        <md-input-container class="md-block" flex-gt-sm>
           <label>English Title</label>
           <input data-ng-model="article.titleEn" required>
           <div ng-messages>
@@ -111,7 +126,7 @@
 
         <md-input-container class="md-block" flex-gt-sm>
           <label>Abstract</label>
-          <textarea name="abstractDescEn" data-ng-model="article.abstractDescEn" required></textarea>
+          <textarea name="abstractDescEn" data-ng-model="article.abstractDescEn"></textarea>
           <div ng-messages>
             <div ng-message="required">This is required.</div>
           </div>
@@ -122,10 +137,31 @@
 
         <md-input-container class="md-block" flex-gt-sm>
           <label>Abstract</label>
-          <textarea name="abstractDescPt" data-ng-model="article.abstractDescPt" required></textarea>
+          <textarea name="abstractDescPt" data-ng-model="article.abstractDescPt"></textarea>
           <div ng-messages>
             <div ng-message="required">This is required.</div>
           </div>
+        </md-input-container>
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <md-button class="md-raised md-primary" ngf-select="addImages(article, $files, $invalidFiles)" multiple
+            accept="image/*"> <!--ngf-max-height="1000" ngf-max-size="1MB">-->
+            Upload images</md-button>
+            <ul>
+              <div id="entry-image" >
+              <li ng-repeat="image in article.imageFiles" style="font:smaller">
+              {{image.name}} {{image.$errorParam}}
+              <span class="progress" ng-show="image.progress >= 0">
+                <div style="width:{{image.progress}}%"  
+                  ng-bind="image.progress + '%'">
+                </div>
+              </span>
+                <img ngf-thumbnail="image || '/thumb.jpg'" width="100" >
+              </li>
+              <li ng-repeat="f in article.errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+              </li> 
+              </div>
+            </ul>
         </md-input-container>
 
         <md-button class="md-raised md-warn remove" ng-show="!$first" ng-click="removeArticle($index)">Remove</button>

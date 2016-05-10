@@ -18,7 +18,8 @@ exports.upload = function(req, res) {
   }).on('finish', function() {
     // show a link to the uploaded file
     res.writeHead(200, {'content-type': 'text/html'});
-    res.end('<a href="/file/' + fileId.toString() + '">download file</a>');
+    //res.end('<a href="/file/' + fileId.toString() + '">download file</a>');
+    res.end(fileId.toString());
   });
 
   req.pipe(busboy);

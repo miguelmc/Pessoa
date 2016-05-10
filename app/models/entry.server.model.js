@@ -31,22 +31,19 @@ var EntrySchema = new Schema({
     // required: true
   },
   abstractDescEn: {
-    type: String,
-    required: 'Please add an abstract in English'
+    type: String
+    //required: 'Please add an abstract in English'
   },
   abstractDescPt: {
-    type: String,
-    required: 'Please add an abstract in Portuguese'
+    type: String
+    //required: 'Please add an abstract in Portuguese'
   },
   keywordsEn: [String],
   keywordsPt: [String],
-  pdf: Buffer, // Will probably need something more robust, like GridFS
-  images: [
-  {
-    name: String,
-    data: Buffer,
-    contentType: String // 'image/png'
-  }],
+  pdf: {
+    type: Schema.ObjectId,
+  },
+  images: [Schema.ObjectId],
   created: {
     type: Date,
     default: Date.now

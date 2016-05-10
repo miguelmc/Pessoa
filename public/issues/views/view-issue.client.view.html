@@ -18,22 +18,28 @@
     <a href="#" data-ng-click="delete(); $event.preventDefault();">delete</a>
   </div>
 
+  <div>
+    <a href="/file/{{issue.pdf}}">Download issue's main pdf</a>
+  </div>
   <small>
     <em>Added on</em>
     <em data-ng-bind="issue.created | date:'mediumDate'"></em>
   </small>
+
 
   <hr>
   <h2>Artigos / Articles</h2>
   <ul id="entry-list">
     <li data-ng-repeat="entry in entries" id="single-entry2">
       <div data-ng-if="entry.type == 'Article'">
-        <h2>{{entry.author}}</h2>
+        <h2><a data-ng-href="#!/entries/{{entry._id}}">{{entry.author}}</a></h2>
         <h3>{{entry.titleEn}}</h3>
         <h3>[{{entry.titlePt}}]</h3>
-        <a href="#"> Link to pdf / </a>
-        <a href="#"> Link to images /</a>
-        <md-button ng-click="toggleAbstract($index)"> Toogle abstract </md-button>
+        <div layout-gt-sm="row" layout-align="end center">
+          <md-button ng-show="entry.pdf" class="orangered" href="/file/{{entry.pdf}}">pdf</md-button>
+          <md-button ng-show="entry.images.length>0" class="orangered" href="#!/entries/{{entry._id}}#view-entry-images">Imagens / Images</md-button>
+          <md-button ng-show="entry.abstractDescEn || entry.abstractDescPt || entry.keywordsEn.length>0 || entry.keywordsPt.length>0" class="orangered" ng-click="toggleAbstract($index)">Resumo / Abstract </md-button>
+        </div>
         <div class="abstract" style="display:none">
           <p><strong>Keywords: </strong>
             <span ng-repeat="word in entry.keywordsEn">{{word}}<span data-ng-show="!$last">, </span></span>
@@ -45,10 +51,9 @@
           <p>{{entry.abstractDescPt}}</p>
         </div>
 
-        <!-- Probably need to add confirmation on deletion  -->
-        <div data-ng-show="authentication.user">
-          <a href="/#!/entries/{{entry._id}}/edit">edit</a>
-          <a href="#" data-ng-click="delete(); $event.preventDefault();">delete</a>
+        <div data-ng-show="authentication.user" layout-gt-sm="row" layout-align="end center">
+          <md-button href="/#!/entries/{{entry._id}}/edit">Edit</md-button>
+          <md-button class="md-warn" data-ng-click="delete(); $event.preventDefault();">Delete</md-button>
         </div>
       <div>
     </l1>
@@ -59,12 +64,14 @@
   <ul id="entry-list">
     <li data-ng-repeat="entry in entries" id="single-entry2">
       <div data-ng-if="entry.type == 'Document'">
-        <h2>{{entry.author}}</h2>
+        <h2><a data-ng-href="#!/entries/{{entry._id}}">{{entry.author}}</a></h2>
         <h3>{{entry.titleEn}}</h3>
         <h3>[{{entry.titlePt}}]</h3>
-        <a href="#"> Link to pdf / </a>
-        <a href="#"> Link to images /</a>
-        <md-button ng-click="toggleAbstract($index)"> Toogle abstract </md-button>
+        <div layout-gt-sm="row" layout-align="end center">
+          <md-button ng-show="entry.pdf" class="orangered" href="/file/{{entry.pdf}}">pdf</md-button>
+          <md-button ng-show="entry.images.length>0" class="orangered" href="#!/entries/{{entry._id}}#view-entry-images">Imagens / Images</md-button>
+          <md-button ng-show="entry.abstractDescEn || entry.abstractDescPt || entry.keywordsEn.length>0 || entry.keywordsPt.length>0" class="orangered" ng-click="toggleAbstract($index)">Resumo / Abstract </md-button>
+        </div>
         <div class="abstract" style="display:none">
           <strong>Keywords:</strong> <ul>
             <li ng-repeat="word in entry.keywordsPt">{{word}}</li>
@@ -90,12 +97,14 @@
   <ul>
     <li data-ng-repeat="entry in entries" id="single-entry2">
       <div data-ng-if="entry.type == 'Review'">
-        <h2>{{entry.author}}</h2>
+        <h2><a data-ng-href="#!/entries/{{entry._id}}">{{entry.author}}</a></h2>
         <h3>{{entry.titleEn}}</h3>
         <h3>[{{entry.titlePt}}]</h3>
-        <a href="#"> Link to pdf / </a>
-        <a href="#"> Link to images /</a>
-        <md-button ng-click="toggleAbstract($index)"> Toogle abstract </md-button>
+        <div layout-gt-sm="row" layout-align="end center">
+          <md-button ng-show="entry.pdf" class="orangered" href="/file/{{entry.pdf}}">pdf</md-button>
+          <md-button ng-show="entry.images.length>0" class="orangered" href="#!/entries/{{entry._id}}#view-entry-images">Imagens / Images</md-button>
+          <md-button ng-show="entry.abstractDescEn || entry.abstractDescPt || entry.keywordsEn.length>0 || entry.keywordsPt.length>0" class="orangered" ng-click="toggleAbstract($index)">Resumo / Abstract </md-button>
+        </div>
         <div class="abstract" style="display:none">
           <strong>Keywords:</strong> <ul>
             <li ng-repeat="word in entry.keywordsPt">{{word}}</li>
@@ -121,12 +130,14 @@
   <ul>
     <li data-ng-repeat="entry in entries" id="single-entry2">
       <div data-ng-if="entry.type == 'Tribute'">
-        <h2>{{entry.author}}</h2>
+        <h2><a data-ng-href="#!/entries/{{entry._id}}">{{entry.author}}</a></h2>
         <h3>{{entry.titleEn}}</h3>
         <h3>[{{entry.titlePt}}]</h3>
-        <a href="#"> Link to pdf / </a>
-        <a href="#"> Link to images /</a>
-        <md-button ng-click="toggleAbstract($index)"> Toogle abstract </md-button>
+        <div layout-gt-sm="row" layout-align="end center">
+          <md-button ng-show="entry.pdf" class="orangered" href="/file/{{entry.pdf}}">pdf</md-button>
+          <md-button ng-show="entry.images.length>0" class="orangered" href="#!/entries/{{entry._id}}#view-entry-images">Imagens / Images</md-button>
+          <md-button ng-show="entry.abstractDescEn || entry.abstractDescPt || entry.keywordsEn.length>0 || entry.keywordsPt.length>0" class="orangered" ng-click="toggleAbstract($index)">Resumo / Abstract </md-button>
+        </div>
         <div class="abstract" style="display:none">
           <strong>Keywords:</strong> <ul>
             <li ng-repeat="word in entry.keywordsPt">{{word}}</li>

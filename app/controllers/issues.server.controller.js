@@ -23,17 +23,6 @@ exports.create = function(req, res, next) {
         message: getErrorMessage(err)
       });
     } else {
-      var writeStream = db.gfs.createWriteStream(
-        {
-          filename: 'pessoa1.jpg'
-          //_id: issue._id 
-        }
-      );
-      fs.createReadStream('public/img/pessoa1.jpg').pipe(writeStream);
-      writeStream.on('close', function (file) {
-        console.log("Wrote file:" + file.filename);
-      });
-
       res.json(issue);
     }
   });

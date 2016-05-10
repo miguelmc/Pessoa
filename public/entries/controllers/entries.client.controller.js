@@ -1,6 +1,6 @@
 angular.module('entries').controller('EntriesController',
-  ['$scope', '$mdDialog', '$routeParams', '$location', 'Authentication', 'Entries',
-    function($scope, $mdDialog, $routeParams, $location, Authentication, Entries) {
+  ['$scope', '$routeParams', '$location', '$mdDialog', 'Authentication', 'Entries',
+    function($scope, $routeParams, $location, $mdDialog, Authentication, Entries) {
       $scope.authentication = Authentication;
       $scope.keywordsEn = [];
       $scope.keywordsPt = [];
@@ -12,6 +12,46 @@ angular.module('entries').controller('EntriesController',
           abs.css("display", "inherit");
         } else {
           abs.css("display", "none");
+        }
+      }
+
+      $scope.openDialog = function($event, image) {
+        $mdDialog.show({
+          controller: ImageDialogCtrl,
+          template: 
+            '<md-dialog aria-label="Autocomplete Dialog Example" ng-cloak>' +
+              '<md-toolbar>' +
+                '<div class="md-toolbar-tools">' +
+                  '<h2>Image</h2>' +
+                  '<span flex></span>' +
+                  '<md-button class="md-icon-button" ng-click="cancel()">' +
+                    '<md-icon md-svg-src="img/ic_close_24px.svg" aria-label="Close dialog"></md-icon>' +
+                  '</md-button>' +
+                '</div>' +
+              '</md-toolbar>' +
+              '<md-dialog-content>' +
+                '<div class="md-dialog-content" style="text-align: center;">' +
+                  '<img src=/file/'+image+' height="600">' +
+                '</div>' +
+              '</md-dialog-content>' +
+              '<md-dialog-actions>' +
+                '<md-button style="color: maroon" class="md-primary" href="/file/'+image+'">download image</md-button>' +
+                '<md-button class="md-primary" aria-label="Finished" ng-click="finish($event)">Close</md-button>' +
+              '</md-dialog-actions>' +
+            '</md-dialog>',
+          parent: angular.element(document.body),
+          targetEvent: $event,
+          clickOutsideToClose: true,
+          locals: {img: image}
+        });
+
+        function ImageDialogCtrl($scope, $mdDialog, img) {
+          $scope.cancel = function($event) {
+            $mdDialog.cancel();
+          };
+          $scope.finish = function($event) {
+            $mdDialog.hide();
+          };
         }
       }
 
@@ -46,6 +86,7 @@ angular.module('entries').controller('EntriesController',
         $scope.entry = Entries.get({
           entryId: $routeParams.entryId
         });
+        console.log($scope.entry);
       };
 
       $scope.update = function() {
@@ -82,3 +123,4 @@ angular.module('entries').controller('EntriesController',
     }
   ]
 );
+

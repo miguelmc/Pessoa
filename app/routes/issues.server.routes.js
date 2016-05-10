@@ -8,7 +8,7 @@ module.exports = function(app) {
 
   app.route('/api/issues/:issueId')
      .get(issues.read)
-     .put(users.requiresAdmin, issues.update)
+     .put(/*users.requiresAdmin,*/ issues.update)
      .delete(users.requiresAdmin, issues.delete);
 
   // Middleware handling :issueId

@@ -13,6 +13,7 @@ var getErrorMessage = function(err) {
 };
 
 exports.create = function(req, res, next) {
+  console.log(req.body);
   var entry = new Entry(req.body);
 
   entry.save(function(err) {
