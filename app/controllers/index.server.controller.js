@@ -11,3 +11,10 @@ exports.render = function(req, res) {
     user: JSON.stringify(req.user)
   })
 }
+
+exports.about = function(req, res) {
+  res.render('about', {
+    title: "Pessoa Plural | About",
+    user: JSON.stringify(req.user)
+  })
+}

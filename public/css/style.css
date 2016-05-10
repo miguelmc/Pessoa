@@ -1,9 +1,11 @@
 /* BASE STYLING */
 html {
   background: transparent;
+  width: 100%;
+  height: 100%
 }
 body {
-  margin: 0;
+  width: 100%; height: 100% margin: 0;
   padding: 0;
   background-color: #333451;
   font-family: 'Arvo', Courier, sans-serif;
@@ -60,7 +62,7 @@ ul {
   height: 84px;
 
   font-family: 'Josefin Sans', Futura, sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -151,6 +153,35 @@ ul {
   color: red;
 }
 
+.page-content {
+  padding: 30px 120px;
+}
+
+.page-content h1, .page-content h2 {
+  text-align: center;
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  margin-bottom: 60px;
+  border-bottom: 4px solid #ec4e4e;
+  color: #ec4e4e;
+}
+
+.page-content h2 {
+  margin-bottom: 10px;
+  border-bottom: 4px dashed #f58548;
+  color: #f58548;
+}
+
+.page-content p {
+  letter-spacing: 0.5px;
+  line-height: 21px;
+  padding: 0px 20px;
+}
+
+.page-content .column {
+  display: flex;
+  margin-bottom: 60px;
+}
 
 /* STEP CAROUSEL STYLING */
 .stepcarousel {
@@ -262,7 +293,27 @@ span.paginatecircle.selected {background: #ec4e4e;}
 #advanced-search {
   text-align: center;
 }
+.wrapper {
+  min-height:100%;
+  margin: 0 auto -155px;
+}
 
+/* FOOTER STYLING */
+#footer, .push {
+  height: 155px; /* '.push' must be the same height as 'footer' */
+}
+
+#footer {
+  background-color: #282938;
+}
+
+.footer-content {
+  padding: 20px 100px;
+  text-align: center;
+  font-family: 'Josefin-Sans', Futura, sans-serif;
+  font-size: 12px;
+  opacity: 0.7;
+}
 
 
 

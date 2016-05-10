@@ -15,42 +15,53 @@
     <script src="/js/jquery-2.2.0.min.js"></script>
   </head>
   <body>
-    <div id="top-bar">
-      <a href="/#!/"><img src="img/logo.png" title="Pessoa Plural"></a>
-      <a href="/#!/"><div class="nav">Sobre<br>About</div></a>
-      <a href="/#!/entries?type=Tribute"><div class="nav">Tributos<br>Tributes</div></a>
-      <a href="/#!/entries?type=Review"><div class="nav">Críticas<br>Reviews</div></a>
-      <a href="/#!/entries?type=Document"><div class="nav">Documentos<br>Documents</div></a>
-      <a href="/#!/entries?type=Article"><div class="nav">Artigos<br>Articles</div></a>
-      <a href="/#!/issues"><div class="nav">Números<br>Issues</div></a>
-      <a href="/#!/"><div class="nav">Autores<br>Authors</div></a>
+    <div class="wrapper">
+
+      <div id="top-bar">
+        <a href="/#!/"><img src="img/logo.png" title="Pessoa Plural"></a>
+        <a href="/#!/"><div class="nav">Sobre<br>About</div></a>
+        <a href="/#!/entries?type=Tribute"><div class="nav">Tributos<br>Tributes</div></a>
+        <a href="/#!/entries?type=Review"><div class="nav">Críticas<br>Reviews</div></a>
+        <a href="/#!/entries?type=Document"><div class="nav">Documentos<br>Documents</div></a>
+        <a href="/#!/entries?type=Article"><div class="nav">Artigos<br>Articles</div></a>
+        <a href="/#!/issues"><div class="nav">Números<br>Issues</div></a>
+        <a href="/#!/"><div class="nav">Autores<br>Authors</div></a>
+      </div>
+
+      <md-content layout-padding id="login-form" >
+        <% for (var i in messages) { %>
+          <div class="flash"><%= messages[i] %></div>
+        <% } %>
+        <form action="/signin" method="post" novalidate>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Username</label>
+            <input name="username" id="username-box"required>
+            <div ng-messages>
+              <div ng-message="required">Enter a username</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Password</label>
+            <input name="password" type="password" required>
+            <div ng-messages>
+              <div ng-message="required">Enter a password</div>
+            </div>
+          </md-input-container>
+          <div class="button-center">
+            <md-button type="submit" class="md-raised md-primary">Sign in</md-button>
+          </div>
+        </form>
+      </md-content>
+      <div class="push"></div>
     </div>
 
-    <md-content layout-padding id="login-form" >
-    <% for (var i in messages) { %>
-      <div class="flash"><%= messages[i] %></div>
-    <% } %>
-      <form action="/signin" method="post" novalidate>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Username</label>
-          <input name="username" id="username-box"required>
-          <div ng-messages>
-            <div ng-message="required">Enter a username</div>
-          </div>
-        </md-input-container>
-
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Password</label>
-          <input name="password" type="password" required>
-          <div ng-messages>
-            <div ng-message="required">Enter a password</div>
-          </div>
-        </md-input-container>
-        <div class="button-center">
-          <md-button type="submit" class="md-raised md-primary">Sign in</md-button>
-        </div>
-      </form>
-    </md-content>
+    <div id="footer">
+      <div class="footer-content">
+        <p>Ed. Onésimo Almeida, Paulo de Medeiros &amp; Jerónimo Pizarro</p>
+        <p>© COPYRIGHT PESSOA PLURAL, 2012-2016. ALL RIGHTS RESERVED. PESSOA PLURAL IS A JOINT-PUBLICATION OF: / É UMA PUBLICAÇÃO CONJUNTA DE: BROWN UNIVERSITY, WARWICK UNIVERSITY &amp; UNIVERSIDAD DE LOS ANDES. ISSN: 2212-4179.</p>
+      </div>
+    </div>
 
 
     <script type="text/javascript" src="/lib/angular/angular.js"></script>
