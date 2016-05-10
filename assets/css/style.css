@@ -1,5 +1,12 @@
 /* BASE STYLING */
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
+  height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
   background-color: #333451;
@@ -28,7 +35,7 @@ a, a:visited {
   height: 84px;
 
   font-family: 'Josefin Sans', Futura, sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -60,8 +67,38 @@ a, a:visited {
 /* BODY CONTENT STYLING */
 #content {
   margin-top: 84px;
+  height: 100%;
 }
 
+.page-content {
+  padding: 30px 120px;
+}
+
+.page-content h1, .page-content h2 {
+  text-align: center;
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  margin-bottom: 60px;
+  border-bottom: 4px solid #ec4e4e;
+  color: #ec4e4e;
+}
+
+.page-content h2 {
+  margin-bottom: 10px;
+  border-bottom: 4px dashed #f58548;
+  color: #f58548;
+}
+
+.page-content p {
+  letter-spacing: 0.5px;
+  line-height: 21px;
+  padding: 0px 20px;
+}
+
+.page-content .column {
+  display: flex;
+  margin-bottom: 60px;
+}
 
 
 /* STEP CAROUSEL STYLING */
@@ -69,7 +106,7 @@ a, a:visited {
   position: relative; /*leave this value alone*/
   overflow: scroll; /*leave this value alone*/
   width: 100%; /*Width of Carousel Viewer itself*/
-  height: 480px; /*Height should enough to fit largest content's height*/
+  height: 70%;
   background-color: #000;
   -webkit-box-sizing: border-box; /* set box model so container width and height value includes any padding/border defined */
   -moz-box-sizing: border-box;
@@ -79,6 +116,7 @@ a, a:visited {
 .stepcarousel .belt {
   position: absolute; /*leave this value alone*/
   width: 100%;
+  height: 100%;
   left: 0;
   top: 0;
 }
@@ -87,7 +125,7 @@ a, a:visited {
   float: left; /*leave this value alone*/
   overflow: hidden; /*clip content that go outside dimensions of holding panel DIV*/
   width: 100%; /*Width of each panel holding each content. If removed, widths should be individually defined on each content DIV then. */
-  height: 480px;
+  height: 100%;
   z-index: 1;
 }
 
@@ -100,16 +138,16 @@ a, a:visited {
 }
 
 .panel-content {
-  padding: 40px 100px;
-  width: 700px;
+  padding: 1% 2%;
+  width: 12%;
   z-index: 5;
   position: absolute;
 }
 
 #mygallery-paginate {
   position: absolute;
-  margin-top: 410px;
-  margin-left: 560px;
+  margin-top: 32%;
+  margin-left: 45%;
   z-index: 50;
 }
 
@@ -130,33 +168,29 @@ span.paginatecircle.selected {background: #ec4e4e;}
 
 
 
-
-
-
-
 /* SEARCH BAR STYLING */
-.box {
+.search-box {
   margin: 20px auto;
-  width: 300px;
+  width: 400px;
   height: 50px;
 }
 
 .container-1 {
-  width: 300px;
+  width: 400px;
   vertical-align: middle;
   white-space: nowrap;
   position: relative;
 }
 
 .container-1 input#search {
-  width: 300px;
+  width: 400px;
   height: 50px;
   background: #282938;
   border: none;
   font-size: 10pt;
   float: left;
   color: #63717f;
-  padding-left: 45px;
+  padding-left: 15px;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
@@ -176,6 +210,23 @@ span.paginatecircle.selected {background: #ec4e4e;}
 }
 
 
+
+
+/* FOOTER STYLING */
+#footer {
+  width: 100%;
+  min-height: 18%;
+  margin-top: 40px;
+  background-color: #282938;
+}
+
+.footer-content {
+  padding: 20px 100px;
+  text-align: center;
+  font-family: 'Josefin-Sans', Futura, sans-serif;
+  font-size: 12px;
+  opacity: 0.7;
+}
 
 
 
