@@ -3,14 +3,28 @@ var fs = require('fs'),
     Issue = db.model('Issue');
 
 var getErrorMessage = function(err) {
-  if (err.errors) {
-    for (var errName in err.errors) {
-      if (err.errors[errName].message)
-        return err.errors[errName].message;
+  var message = '';
+
+  if (err.code) {
+    // Dispensable. Expand if ever needed.
+    switch(err.code) {
+      // Not really going to happen if we are only having
+      //  the root user.
+      case 11000:
+      case 11001:
+        message = 'Issue number already exists';
+        break;
+      default:
+        message = 'Something went wrong';
     }
   } else {
-    return 'Unknown server error';
+    for (var errName in err.errors) {
+      if (err.errors[errName].message)
+        message = err.errors[errName].message;
+    }
   }
+
+  return message;
 };
 
 exports.create = function(req, res, next) {

@@ -12,12 +12,12 @@ var EntrySchema = new Schema({
   },
   titleEn: {
     type: String,
-    unique: true,
+    unique: 'English title already exists',
     required: 'Title cannot be blank'
   },
   titlePt: {
     type: String,
-    unique: true,
+    unique: 'Portuguese title already exists',
     required: 'Title cannot be blank'
   },
   type: {

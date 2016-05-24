@@ -27,11 +27,13 @@
   </small>
 
 
-  <hr>
-  <h2>Artigos / Articles</h2>
+  <div ng-show="(entries.filter(checkEntry('Article'))).length>0">
+    <hr>
+    <h2>Artigos / Articles</h2>
+  </div>
   <ul id="entry-list">
-    <li data-ng-repeat="entry in entries" id="single-entry2">
-      <div data-ng-if="entry.type == 'Article'">
+    <li data-ng-repeat="entry in entries.filter(checkEntry('Article'))" id="single-entry2">
+      <div data-ng-show="entry.type == 'Article'">
         <h2><a data-ng-href="#!/entries/{{entry._id}}">{{entry.author}}</a></h2>
         <h3>{{entry.titleEn}}</h3>
         <h3>[{{entry.titlePt}}]</h3>
@@ -59,10 +61,12 @@
     </l1>
   </ul>
 
-  <hr>
-  <h2>Documentos / Documents</h2>
+  <div ng-show="(entries.filter(checkEntry('Document'))).length>0">
+    <hr>
+    <h2>Documentos / Documents</h2>
+  </div>
   <ul id="entry-list">
-    <li data-ng-repeat="entry in entries" id="single-entry2">
+    <li data-ng-repeat="entry in entries.filter(checkEntry('Document'))" id="single-entry2">
       <div data-ng-if="entry.type == 'Document'">
         <h2><a data-ng-href="#!/entries/{{entry._id}}">{{entry.author}}</a></h2>
         <h3>{{entry.titleEn}}</h3>
@@ -92,10 +96,12 @@
     </l1>
   </ul>
 
-  <hr>
-  <h2>Criticas / Reviews</h2>
+  <div ng-show="(entries.filter(checkEntry('Review'))).length>0">
+    <hr>
+    <h2>Criticas / Reviews</h2>
+  </div>
   <ul>
-    <li data-ng-repeat="entry in entries" id="single-entry2">
+    <li data-ng-repeat="entry in entries.filter(checkEntry('Review'))" id="single-entry2">
       <div data-ng-if="entry.type == 'Review'">
         <h2><a data-ng-href="#!/entries/{{entry._id}}">{{entry.author}}</a></h2>
         <h3>{{entry.titleEn}}</h3>
@@ -125,10 +131,12 @@
     </l1>
   </ul>
 
-  <hr>
-  <h2>Tributos / Tributes</h2>
+  <div ng-show="(entries.filter(checkEntry('Tribute'))).length>0">
+    <hr>
+    <h2>Tributos / Tributes</h2>
+  </div>
   <ul>
-    <li data-ng-repeat="entry in entries" id="single-entry2">
+    <li data-ng-repeat="entry in entries.filter(checkEntry('Tribute'))" id="single-entry2">
       <div data-ng-if="entry.type == 'Tribute'">
         <h2><a data-ng-href="#!/entries/{{entry._id}}">{{entry.author}}</a></h2>
         <h3>{{entry.titleEn}}</h3>

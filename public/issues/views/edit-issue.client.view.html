@@ -1,48 +1,182 @@
 <section data-ng-controller="IssuesController" data-ng-init="findOne()" id="content">
   <h1>Edit Issue</h1>
-  <form data-ng-submit="update()" novalidate>
-    <div>
-      <label for="issueNumber">Issue Number</label>
-      <div>
-        <input type="text" data-ng-model="issueNumber" id="issueNumber"
-                           placeholder="IssueNumber" required>
-      </div>
-    </div>
+  <md-content layout-padding id="new-issue-form" >
+    <form name="editIssue" data-ng-submit="editIssue.$valid && update()" novalidate>
+  
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Issue Number</label>
+          <input data-ng-model="issue.issueNumber" required>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
 
-    <div>
-      <label for="notes">Additional information for issue (for example: Jenning's Issue)</label>
-      <div>
-        <input type="text" data-ng-model="notes" id="notes"
-                           placeholder="Aditional Info">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Additional information for issue (for example: Jenning's Issue)</label>
+          <input data-ng-model="issue.notesEn">
+        </md-input-container>
       </div>
-    </div>
 
-    <div>
-      <label for="season">Season</label>
-      <div>
-        <select data-ng-model="season" id="season" name="season" required>
-          <option value="">---Please select---</option>
-          <option value="Spring">Spring</option>
-          <option value="Summer">Summer</option>
-          <option value="Fall">Fall</option>
-          <option value="Winter">Winter</option>
-        </select>
-      </div>
-    </div>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Season</label>
+        <md-select ng-model="issue.season" required>
+          <md-option value="Spring">Spring</md-option>
+          <md-option value="Summer">Summer</md-option>
+          <md-option value="Fall">Fall</md-option>
+          <md-option value="Winter">Winter</md-option>
+        </md-select>
+        <div ng-messages>
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
 
-    <div>
-      <label for="year">Year</label>
-      <div>
-        <input type="text" data-ng-model="year" id="year"
-                           placeholder="Enter year" required>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Year</label>
+        <input ng-model="issue.year" type="number" step="1" required>
+        <div ng-messages>
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container class="md-block" flex-gt-sm>
+        <button ngf-select="addIssuePdf($files, $invalidFiles)" multiple
+          accept="application/pdf"> <!--ngf-max-height="1000" ngf-max-size="1MB">-->
+          Upload issue's main pdf (optional)</button>
+          <ul>
+            <li style="font:smaller">{{pdf.name}} {{pdf.$errorParam}}
+            <span class="progress" ng-show="pdf.progress >= 0">
+              <div style="width:{{pdf.progress}}%"  
+                ng-bind="pdf.progress + '%'"></div>
+            </span>
+            </li>
+            <li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+            </li> 
+          </ul>
+      </md-input-container>
+
+      <div id="new-article">
+        <ul id="new-article-list">
+        </ul>
       </div>
-    </div>
- 
-    <div>
-      <input type="submit">
-    </div>
-    <div data-ng-show="error">
-      <strong data-ng-bind="error"></strong>
-    </div>
-  </form>
+
+      <h2>Issue's entries</h2>
+
+      <fieldset data-ng-repeat="article in entries" id="single-entry">
+        <h3 ng-bind="article.titleEn"></h3>
+
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Author</label>
+            <input data-ng-model="article.author" required>
+            <div ng-messages>
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Type of document</label>
+            <md-select ng-model="article.type" required>
+              <md-option value="">---Please select---</md-option>
+              <md-option value="Article">Article</md-option>
+              <md-option value="Document">Document</md-option>
+              <md-option value="Review">Review</md-option>
+              <md-option value="Tribute">Tribute</md-option>
+            </md-select>
+            <div ng-messages>
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
+        </div>
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <button ngf-select="addEntryPdf(article, $files, $invalidFiles)" multiple
+            accept="application/pdf"> <!--ngf-max-height="1000" ngf-max-size="1MB">-->
+            Upload pdf</button>
+            <ul>
+              <li style="font:smaller">{{article.pdf.name}} {{article.pdf.$errorParam}}
+              <span class="progress" ng-show="article.pdf.progress >= 0">
+                <div style="width:{{article.pdf.progress}}%"  
+                  ng-bind="article.pdf.progress + '%'"></div>
+              </span>
+              </li>
+              <li ng-repeat="f in article.errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+              </li> 
+            </ul>
+        </md-input-container>
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>English Title</label>
+          <input data-ng-model="article.titleEn" required>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Portuguese Title</label>
+          <input data-ng-model="article.titlePt" required>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+
+        <h2 class="md-title">English Keywords (Press enter after each keyword)</h2>
+        <md-chips ng-model="article.keywordsEn" readonly="false"></md-chips>
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Abstract</label>
+          <textarea name="abstractDescEn" data-ng-model="article.abstractDescEn"></textarea>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+
+        <h2 class="md-title">Portuguese Keywords (Press enter after each keyword)</h2>
+        <md-chips ng-model="article.keywordsPt" readonly="false"></md-chips>
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Abstract</label>
+          <textarea name="abstractDescPt" data-ng-model="article.abstractDescPt"></textarea>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <md-button class="md-raised md-primary" ngf-select="addImages(article, $files, $invalidFiles)" multiple
+            accept="image/*"> <!--ngf-max-height="1000" ngf-max-size="1MB">-->
+            Upload images</md-button>
+            <ul>
+              <div id="entry-image" >
+              <li ng-repeat="image in article.imageFiles" style="font:smaller">
+              {{image.name}} {{image.$errorParam}}
+              <span class="progress" ng-show="image.progress >= 0">
+                <div style="width:{{image.progress}}%"  
+                  ng-bind="image.progress + '%'">
+                </div>
+              </span>
+                <img ngf-thumbnail="image || '/thumb.jpg'" width="100" >
+              </li>
+              <li ng-repeat="f in article.errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+              </li> 
+              </div>
+            </ul>
+        </md-input-container>
+
+        <md-button class="md-raised md-warn remove" ng-show="!$first" ng-click="removeArticle($index)">Remove</button>
+      </fieldset>
+
+      
+      <div id="add-article">
+        <md-button class="md-primary" data-ng-click="addNewArticle()">+ Add entry</md-button>
+
+        <md-button type="submit" class="md-raised">Submit</md-button>
+      </div>
+      <div data-ng-show="error" class="put-center">
+        <strong class="flash" data-ng-bind="error"></strong>
+      </div>
+    </form>
+  </md-content>
+
 </section>

@@ -4,7 +4,8 @@ var mongoose = require('mongoose'),
 var IssueSchema = new Schema({
   issueNumber: {
     type: Number,
-    required: 'Issue number cannot be empty.'
+    required: 'Issue number cannot be empty.',
+    unique: true
   },
   notesEn: {
     type: String

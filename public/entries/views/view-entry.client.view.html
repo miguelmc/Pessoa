@@ -35,11 +35,13 @@
   <h3 data-ng-bind="entry.issue"></h3> 
 
 
-  <h2 id="view-entry-images">Images</h2>
-  <div id="entry-image">
-    <li ng-repeat="image in entry.images">
-      <img ng-src="/file/{{image}}" width="100" ng-click="openDialog($event, image)">
-    </li> 
+  <div id="all-images">
+    <h2 id="view-entry-images">Images</h2>
+    <div id="entry-image">
+      <li ng-repeat="image in entry.images">
+        <img ng-src="/file/{{image}}" width="100" ng-click="openDialog($event, image)">
+      </li> 
+    </div>
   </div>
   
 </section>

@@ -4,11 +4,11 @@ var users = require('../controllers/users.server.controller'),
 module.exports = function(app) {
   app.route('/api/entries')
      .get(entries.list)
-     .post(/*users.requiresAdmin,*/ entries.create);
+     .post(users.requiresAdmin, entries.create);
 
   app.route('/api/entries/:entryId')
      .get(entries.read)
-     .put(/*users.requiresAdmin,*/ entries.update)
+     .put(users.requiresAdmin, entries.update)
      .delete(users.requiresAdmin, entries.delete);
 
   // Middleware handling :entryId

@@ -1,6 +1,6 @@
 angular.module('entries').controller('EntriesController',
-  ['$scope', '$routeParams', '$location', '$mdDialog', 'Authentication', 'Entries',
-    function($scope, $routeParams, $location, $mdDialog, Authentication, Entries) {
+  ['$scope', '$routeParams', '$location', '$mdDialog', '$timeout', 'Upload', 'Authentication', 'Entries',
+    function($scope, $routeParams, $location, $mdDialog, $timeout, Upload, Authentication, Entries) {
       $scope.authentication = Authentication;
       $scope.keywordsEn = [];
       $scope.keywordsPt = [];
@@ -55,6 +55,73 @@ angular.module('entries').controller('EntriesController',
         }
       }
 
+      $scope.addEntryPdf = function(files, errFiles) {
+        $scope.pdf = files[0];
+        $scope.errFiles= errFiles;
+      }
+
+      $scope.addImages = function(imageFiles, errFiles) {
+        $scope.imageFiles = imageFiles;
+        $scope.imgErrFiles = errFiles;
+        console.log($scope.imageFiles);
+      }
+
+      $scope.uploadImages = function(entry) {
+        imageFiles = $scope.imageFiles;
+        if (!imageFiles) return;
+        if (imageFiles.length==0) return;
+        
+        entry.images = []
+        angular.forEach(imageFiles, function(file) {
+            file.upload = Upload.upload({
+                url: 'file',
+                data: {file: file}
+            });
+
+            file.upload.then(function (response) {
+                $timeout(function () {
+                    file.result = response.data;
+                    entry.images.push(file.result);
+
+                    // This should be true only once on the last iteration completion.
+                    if (entry.images.length == imageFiles.length) {
+                      entry.$update();
+                    }
+                });
+            }, function (response) {
+                if (response.status > 0)
+                    $scope.errorMsg = response.status + ': ' + response.data;
+            }, function (evt) {
+                file.progress = Math.min(100, parseInt(100.0 * 
+                                        evt.loaded / evt.total));
+            });
+        });
+      }
+
+      $scope.uploadPdf = function(entry) {
+        pdf = $scope.pdf;
+        if (typeof pdf != 'object') return;
+
+        pdf.upload = Upload.upload({
+            url: 'file',
+            data: {file: pdf}
+        });
+
+        pdf.upload.then(function (response) {
+            $timeout(function () {
+                pdf.result = response.data;
+                entry.pdf = pdf.result;
+                entry.$update();
+            });
+        }, function (response) {
+            if (response.status > 0)
+                $scope.errorMsg = response.status + ': ' + response.data;
+        }, function (evt) {
+            pdf.progress = Math.min(100, parseInt(100.0 * 
+                                    evt.loaded / evt.total));
+        });
+      }
+
       $scope.create = function() {
         // TODO: See whats up with img, pdf storage
         var entry = new Entries({
@@ -69,7 +136,20 @@ angular.module('entries').controller('EntriesController',
         });
 
         entry.$save(function(response) {
+          $scope.uploadPdf(entry);
+          $scope.uploadImages(entry);
           $location.path('entries/' + response._id);
+        }, function(errorResponse) {
+          console.log(errorResponse.data.message);
+          $scope.error = errorResponse.data.message;
+        });
+      };
+
+      $scope.update = function() {
+        $scope.entry.$update(function() {
+          $scope.uploadPdf($scope.entry);
+          $scope.uploadImages($scope.entry);
+          $location.path('entries/' + $scope.entry._id);
         }, function(errorResponse) {
           $scope.error = errorResponse.data.message;
         });
@@ -86,16 +166,11 @@ angular.module('entries').controller('EntriesController',
         $scope.entry = Entries.get({
           entryId: $routeParams.entryId
         });
+        $scope.entry.keywordsPt = [];
+        $scope.entry.keywordsEn = [];
         console.log($scope.entry);
       };
 
-      $scope.update = function() {
-        $scope.entry.$update(function() {
-          $location.path('entries/' + $scope.entry._id);
-        }, function(errorResponse) {
-          $scope.error = errorResponse.data.message;
-        });
-      };
 
       $scope.delete = function(entry) {
         var confirm = $mdDialog.confirm()

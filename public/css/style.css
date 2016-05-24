@@ -51,6 +51,10 @@ ul {
   color: orangered;
 }
 
+#all-images {
+  text-align: center;
+  padding: 2em;
+}
 
 /* TOP BAR STYLING */
 #top-bar {

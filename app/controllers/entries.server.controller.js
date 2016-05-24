@@ -2,14 +2,28 @@ var db = require('../../config/mongoose'),
     Entry = db.model('Entry');
 
 var getErrorMessage = function(err) {
-  if (err.errors) {
-    for (var errName in err.errors) {
-      if (err.errors[errName].message)
-        return err.errors[errName].message;
+  var message = '';
+
+  if (err.code) {
+    // Dispensable. Expand if ever needed.
+    switch(err.code) {
+      // Not really going to happen if we are only having
+      //  the root user.
+      case 11000:
+      case 11001:
+        message = 'Title already exists';
+        break;
+      default:
+        message = 'Something went wrong';
     }
   } else {
-    return 'Unknown server error';
+    for (var errName in err.errors) {
+      if (err.errors[errName].message)
+        message = err.errors[errName].message;
+    }
   }
+
+  return message;
 };
 
 exports.create = function(req, res, next) {
@@ -18,6 +32,7 @@ exports.create = function(req, res, next) {
 
   entry.save(function(err) {
     if (err) {
+      console.log(err);
       return res.status(400).send({
         message: getErrorMessage(err)
       });
