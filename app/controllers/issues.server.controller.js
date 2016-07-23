@@ -56,14 +56,14 @@ exports.list = function(req, res, next) {
 };
 
 exports.read = function(req, res) {
-  var fs_write_stream = fs.createWriteStream('pessoa_back.jpg');
-  var readstream = db.gfs.createReadStream(
-    {
-      filename: 'pessoa1.jpg'
-      //_id: req.issue._id 
-    }
-  );
-  readstream.pipe(fs_write_stream);
+  //var fs_write_stream = fs.createWriteStream('pessoa_back.jpg');
+  //var readstream = db.gfs.createReadStream(
+  //  {
+  //    filename: 'pessoa1.jpg'
+  //    //_id: req.issue._id 
+  //  }
+  //);
+  //readstream.pipe(fs_write_stream);
   res.json(req.issue);
 }
 
