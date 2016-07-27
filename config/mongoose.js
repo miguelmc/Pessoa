@@ -18,6 +18,7 @@ db.once('open', function() {
 require('../app/models/issue.server.model');
 require('../app/models/entry.server.model');
 require('../app/models/user.server.model');
+require('../app/models/author.server.model');
 
 module.exports = db;
 
