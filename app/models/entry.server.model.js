@@ -10,6 +10,11 @@ var EntrySchema = new Schema({
     type: String,
     required: 'Author cannot be blank'
   },
+  author2: {
+    type: Schema.ObjectId,
+    ref: 'Author'
+    // required: true
+  },
   titleEn: {
     type: String,
     unique: 'English title already exists',

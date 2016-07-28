@@ -25,7 +25,7 @@
         <a href="/#!/entries?type=Document"><div class="nav">Documentos<br>Documents</div></a>
         <a href="/#!/entries?type=Article"><div class="nav">Artigos<br>Articles</div></a>
         <a href="/#!/issues"><div class="nav">Números<br>Issues</div></a>
-        <a href="/#!/"><div class="nav">Autores<br>Authors</div></a>
+        <a href="/#!/authors"><div class="nav">Autores<br>Authors</div></a>
       </div>
 
       <section ng-view></section>
@@ -55,20 +55,30 @@
     <script type="text/javascript" src="/lib/ng-file-upload/ng-file-upload.min.js"></script>
     <script type="text/javascript" src="/lib/ng-file-upload/ng-file-upload-shim.min.js"></script>
 
+    <!-- Issues --> 
     <script type="text/javascript" src="/issues/issues.client.module.js"></script>
     <script type="text/javascript" src="/issues/controllers/issues.client.controller.js"></script>
     <script type="text/javascript" src="/issues/services/issues.client.service.js"></script>
     <script type="text/javascript" src="/issues/config/issues.client.routes.js"></script>
 
+    <!-- Authors --> 
+    <script type="text/javascript" src="/authors/authors.client.module.js"></script>
+    <script type="text/javascript" src="/authors/controllers/authors.client.controller.js"></script>
+    <script type="text/javascript" src="/authors/services/authors.client.service.js"></script>
+    <script type="text/javascript" src="/authors/config/authors.client.routes.js"></script>
+
+    <!-- Entries --> 
     <script type="text/javascript" src="/entries/entries.client.module.js"></script>
     <script type="text/javascript" src="/entries/controllers/entries.client.controller.js"></script>
     <script type="text/javascript" src="/entries/services/entries.client.service.js"></script>
     <script type="text/javascript" src="/entries/config/entries.client.routes.js"></script>
 
+    <!-- Index--> 
     <script type="text/javascript" src="/index/index.client.module.js"></script>
     <script type="text/javascript" src="/index/controllers/index.client.controller.js"></script>
     <script type="text/javascript" src="/index/config/index.client.routes.js"></script>
 
+    <!-- Users --> 
     <script type="text/javascript" src="/users/users.client.module.js"></script>
     <script type="text/javascript" src="/users/services/authentication.client.service.js"></script>
 

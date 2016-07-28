@@ -104,6 +104,11 @@ ul {
   width: 70%;
 }
 
+#new-author-form {
+  margin: auto;
+  width: 80%;
+}
+
 #new-issue-form {
   margin: auto;
   width: 80%;

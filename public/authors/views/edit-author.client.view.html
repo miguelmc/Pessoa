@@ -1,0 +1,34 @@
+<section data-ng-controller="AuthorsController" data-ng-init="findOneNoEntries()" id="content">
+  <h1>New Author</h1>
+  <md-content layout-padding id="new-author-form" >
+    <form name="editAuthor" data-ng-submit="editAuthor.$valid && update()" novalidate>
+  
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Author's name</label>
+          <input data-ng-model="author.name" required>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+      </div>
+
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Author's bio</label>
+        <textarea name="bio" data-ng-model="author.bio"></textarea>
+        <div ng-messages>
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
+
+      <div id="add-article">
+        <md-button type="submit" class="md-raised">Submit</md-button>
+      </div>
+
+      <div data-ng-show="error" class="put-center">
+        <strong class="flash" data-ng-bind="error"></strong>
+      </div>
+
+    </form>
+  </md-content>
+</section>
