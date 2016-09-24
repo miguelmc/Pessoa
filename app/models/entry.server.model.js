@@ -7,8 +7,8 @@ var mongoose = require('mongoose'),
 var EntrySchema = new Schema({
   // Might need to make an Author model
   author: {
-    type: String,
-    required: 'Author cannot be blank'
+    type: String
+    //required: 'Author cannot be blank'
   },
   author2: {
     type: Schema.ObjectId,

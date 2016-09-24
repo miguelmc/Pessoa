@@ -1,10 +1,65 @@
 angular.module('entries').controller('EntriesController',
-  ['$scope', '$routeParams', '$location', '$mdDialog', '$timeout', 'Upload', 'Authentication', 'Entries',
-    function($scope, $routeParams, $location, $mdDialog, $timeout, Upload, Authentication, Entries) {
+  ['$scope', '$routeParams', '$location', '$mdDialog', '$timeout', 'Upload', 'Authentication', 'Entries', 'Authors', '$log', '$q',
+    function($scope, $routeParams, $location, $mdDialog, $timeout, Upload, Authentication, Entries, Authors, $log, $q) {
       $scope.authentication = Authentication;
       $scope.keywordsEn = [];
       $scope.keywordsPt = [];
       $scope.issue = 1; // TODO: default to last issue created
+
+      // -------------------------------------------------------
+      var self = this;
+      self.simulateQuery = false;
+      self.isDisabled    = false;
+      self.authors = loadAll();
+      self.querySearch   = querySearch;
+      self.selectedItemChange = selectedItemChange;
+      self.searchTextChange   = searchTextChange;
+
+      function querySearch (query) {
+        var results = query ? self.authors.filter( createFilterFor(query) ) : self.authors,
+            deferred;
+        if (self.simulateQuery) {
+          deferred = $q.defer();
+          $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+          return deferred.promise;
+        } else {
+          return results;
+        }
+      }
+
+      function searchTextChange(text) {
+        $log.info('Text changed to ' + text);
+      }
+      function selectedItemChange(item) {
+        $log.info('Item changed to ' + JSON.stringify(item));
+      }
+
+      /**
+      * Build `authors` list of key/value pairs
+      */
+      function loadAll() {
+        var allAuthors = Authors.query(function() {
+          console.log(allAuthors)
+          allAuthors = allAuthors.map( function (author) {
+            author.value = author.name.toLowerCase();
+            //author.name = author.name;
+            return author;
+          });
+        });
+
+        return allAuthors;
+      }
+
+      /**
+      * Create filter function for a query string
+      */
+      function createFilterFor(query) {
+        var lowercaseQuery = angular.lowercase(query);
+        return function filterFn(state) {
+          return (state.value.indexOf(lowercaseQuery) === 0);
+        };
+      }
+      // -------------------------------------------------------
 
       $scope.toggleAbstract = function(index) {
         var abs = $(".abstract").eq(index);
@@ -122,10 +177,11 @@ angular.module('entries').controller('EntriesController',
         });
       }
 
-      $scope.create = function() {
+      $scope.create = function(author) {
         // TODO: See whats up with img, pdf storage
         var entry = new Entries({
           author: this.author,
+          author2: author._id,
           titleEn: this.titleEn,
           titlePt: this.titlePt,
           type: this.type,
