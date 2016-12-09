@@ -180,7 +180,7 @@ angular.module('entries').controller('EntriesController',
       $scope.create = function(author) {
         // TODO: See whats up with img, pdf storage
         var entry = new Entries({
-          author: this.author,
+          //author: this.author,
           author2: author._id,
           titleEn: this.titleEn,
           titlePt: this.titlePt,
@@ -226,6 +226,53 @@ angular.module('entries').controller('EntriesController',
         $scope.entry.keywordsEn = [];
         console.log($scope.entry);
       };
+
+      $scope.dialogCreate = function($event) {
+        $mdDialog.show({
+          controller: function ($timeout, $q, $scope, $mdDialog) {
+              var quest =this; 
+              // you will be returning quest
+
+              $scope.cancel = function($event) {
+              $mdDialog.cancel();
+              };
+              $scope.finish = function($event) {
+              $mdDialog.hide();
+              };
+              $scope.answer = function() {
+              //pass quest to hide function.
+              $mdDialog.hide(quest);
+              };
+              },
+          controllerAs: 'createAuthor',
+          templateUrl: 'createAuthor.tmpl.html',
+          parent: angular.element(document.body),
+          targetEvent: $event,
+          clickOutsideToClose:true,
+          locals: {parent: $scope},
+          
+        })
+        .then(function(params) {
+            var author = new Authors({
+              name: params.name,
+              last: params.last,
+              bio: params.bio
+            });
+
+            author.$save(function(response) {
+              // Reload authors for autocompleter
+              self.authors = loadAll();
+            }, function(errorResponse) {
+              console.log(errorResponse.data.message);
+              $scope.error = errorResponse.data.message;
+            });
+
+            //createAuthor.name= '';
+            //createAuthor.last= '';
+            //createAuthor.bio= '';
+          });
+      };
+
 
 
       $scope.delete = function(entry) {

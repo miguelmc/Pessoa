@@ -12,8 +12,8 @@ var EntrySchema = new Schema({
   },
   author2: {
     type: Schema.ObjectId,
-    ref: 'Author'
-    // required: true
+    ref: 'Author',
+    required: true
   },
   titleEn: {
     type: String,

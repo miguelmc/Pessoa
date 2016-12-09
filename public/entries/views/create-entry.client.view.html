@@ -5,36 +5,44 @@
           data-ng-submit="newEntry.$valid && ctrl.selectedItem && create(ctrl.selectedItem)" novalidate>
         <h3 ng-bind="titleEn"></h3>
 
-        <md-autocomplete
-            ng-disabled="ctrl.isDisabled"
-            md-no-cache="ctrl.noCache"
-            md-selected-item="ctrl.selectedItem"
-            md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
-            md-search-text="ctrl.searchText"
-            md-selected-item-change="ctrl.selectedItemChange(item)"
-            md-items="item in ctrl.querySearch(ctrl.searchText)"
-            md-item-text="item.name"
-            md-min-length="0"
-            md-floating-label="Author">
-          <md-item-template>
-            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.name}}</span>
-          </md-item-template>
-          <md-not-found>
-            No authors matching "{{ctrl.searchText}}" were found.
-    <!-- <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a> -->
-          </md-not-found>
-        </md-autocomplete>
+        <div layout-gt-sm="row">
+          <div id="autocomplete">
+            <md-autocomplete
+                ng-disabled="ctrl.isDisabled"
+                md-no-cache="ctrl.noCache"
+                md-selected-item="ctrl.selectedItem"
+                md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                md-search-text="ctrl.searchText"
+                md-selected-item-change="ctrl.selectedItemChange(item)"
+                md-items="item in ctrl.querySearch(ctrl.searchText)"
+                md-item-text="item.name + ' ' + item.last"
+                md-min-length="0"
+                md-floating-label="Author">
+              <md-item-template>
+                <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.name}} {{item.last}}</span>
+              </md-item-template>
+              <md-not-found>
+                No authors matching "{{ctrl.searchText}}" were found.
+        <!-- <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a> -->
+              </md-not-found>
+            </md-autocomplete>
+          </div>
+
+          <md-input-container class="md-block" flex-gt-sm>
+            <md-button class="md-raised md-primary" ng-click="dialogCreate($event)">
+              Create New Author 
+            </md-button>
+          </md-input-container>
+
+        </div>
 
         <div layout-gt-sm="row">
-          <md-input-container class="md-block" flex-gt-sm>
-          </md-input-container>
 
           <md-input-container class="md-block" flex-gt-sm>
             <label>Type of document</label>
             <md-select ng-model="type" required>
               <md-option value="">---Please select---</md-option>
-              <md-option value="Article">Article</md-option>
-              <md-option value="Document">Document</md-option>
+              <md-option value="Article">Article</md-option> <md-option value="Document">Document</md-option>
               <md-option value="Review">Review</md-option>
               <md-option value="Tribute">Tribute</md-option>
             </md-select>
@@ -135,3 +143,42 @@
     </form>
   </md-content>
 </section>
+
+<script type="text/ng-template" id="createAuthor.tmpl.html">
+  <md-dialog aria-label="Create Author" ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Create Author</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <form role="form" ng-submit="answer()">
+              <div layout-gt-xs="row">
+                <md-input-container class="md-block" flex-gt-xs="">
+                  <label>Name</label>
+                  <input ng-model="createAuthor.name" size="30" placeholder="Author's name">
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-xs="">
+                  <label>Lastname</label>
+                  <input ng-model="createAuthor.last" size="30" placeholder="Author's lastname">
+                </md-input-container>
+
+              </div>
+                <md-input-container class="md-block" flex-gt-xs="">
+                  <label>Biography/Description</label>
+                  <textarea ng-model="createAuthor.bio"  size="30" placeholder="Write author's bio"></textarea>
+                </md-input-container>
+
+                <md-button type="submit" class="md-raised md-primary">Save</md-button>
+          </form>
+      </div>
+    </md-dialog-content>
+  </md-dialog>
+</script>
