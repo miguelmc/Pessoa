@@ -21,7 +21,7 @@ var getErrorMessage = function(err) {
         message = 'Username already exists';
         break;
       default:
-        message = 'Something went wrong';
+        message = 'Something went wrong ' + err.code;
     }
   } else {
     for (var errName in err.errors) {

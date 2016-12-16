@@ -14,7 +14,7 @@ var getErrorMessage = function(err) {
         message = 'Title already exists';
         break;
       default:
-        message = 'Something went wrong';
+        message = 'Something went wrong ' + err.code;
     }
   } else {
     for (var errName in err.errors) {
@@ -59,6 +59,9 @@ exports.read = function(req, res) {
 }
 
 exports.update = function(req, res, next) {
+  // Gotta do this to work...
+  delete req.body._id;
+
   Entry.findByIdAndUpdate(req.entry.id, req.body, function(err, entry) {
     if (err) {
       return res.status(400).send({

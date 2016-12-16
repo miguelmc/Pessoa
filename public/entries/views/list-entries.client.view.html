@@ -1,24 +1,41 @@
 <section data-ng-controller="EntriesController" data-ng-init="find()" id="content">
   <h1 data-ng-bind="title"></h1>
   <md-button href="/#!/entries/create">Create new entry</md-button>
-  <ul id="entry-list">
-    <li data-ng-repeat="entry in entries" class="list-single-entry">
-      <hr>
-      <h2><a data-ng-href="#!/entries/{{entry._id}}">{{entry.author}}</a></h2>
-      <h3>{{entry.titleEn}}</h3>
-      <h3>[{{entry.titlePt}}]</h3>
+
+
+
+
+  <ul ng-repeat='(key, entries) in entriesSorted' id="entry-list">
+    <hr>
+    <div data-ng-repeat="id in entries[0].authors" id="authors-list">
+      <h2><a data-ng-href="#!/authors/{{id}}">
+          {{authorInfo[id].name}} {{authorInfo[id].last}}
+      </a><span ng-show="!$last">,&nbsp</span></h2>
+    </div>
+    <li ng-repeat='entry in entries' class="list-single-entry">
+
+      <h2>{{entry.titles[0]}}</h2>
+      <div data-ng-repeat="title in entry.titles">
+        <div ng-if="$index!=0">
+          <h3>[{{title}}]</h3>
+        </div>
+      </div>
+
       <div layout-gt-sm="row" layout-align="end center">
           <md-button ng-show="entry.pdf" class="orangered" href="/file/{{entry.pdf}}">pdf</md-button>
           <md-button ng-show="entry.images.length>0" class="orangered" href="#!/entries/{{entry._id}}#view-entry-images">Imagens / Images</md-button>
-          <md-button ng-show="entry.abstractDescEn || entry.abstractDescPt || entry.keywordsEn.length>0 || entry.keywordsPt.length>0" class="orangered" ng-click="toggleAbstract($index)">Resumo / Abstract </md-button>
+          <md-button ng-show="entry.keywordSets[0].length!=0 || entry.descs[0]!=''" class="orangered" ng-click="toggleAbstract($index)">Resumo / Abstract </md-button>
       </div>
       <div class="abstract" style="display:none">
-        <p><strong>Keywords: </strong>
-          <span ng-repeat="word in entry.keywordsEn">{{word}}<span data-ng-show="!$last">, </span></span>
-        <p>{{entry.abstractDescEn}}</p>
-        <p><strong>Palavras-chave: </strong>
-          <span ng-repeat="word in entry.keywordsPt">{{word}}<span data-ng-show="!$last">, </span></span>
-        <p>{{entry.abstractDescPt}}</p>
+        <div data-ng-repeat="keywords in entry.keywordSets">
+          <strong>Keywords:</strong> <ul>
+            <li ng-repeat="word in keywords">
+              {{word}}<span ng-show="!$last">,&nbsp</span>
+            </li>
+          </ul>
+          <p>{{entry.descs[$index]}}</p>
+          <br />
+        </div>
       </div>
 
       <!-- Probably need to add confirmation on deletion  -->
@@ -26,6 +43,8 @@
         <md-button href="/#!/entries/{{entry._id}}/edit">Edit</md-button>
         <md-button class="md-warn" data-ng-click="delete(entry);">Delete</md-button>
       </div>
+
+      <br />
     </li>
   </ul>
 </section>

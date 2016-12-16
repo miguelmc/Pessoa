@@ -2,38 +2,47 @@
   <h1>New Entry</h1>
   <md-content layout-padding id="new-issue-form" >
     <form name="newEntry" 
-          data-ng-submit="newEntry.$valid && ctrl.selectedItem && create(ctrl.selectedItem)" novalidate>
-        <h3 ng-bind="titleEn"></h3>
+          data-ng-submit="newEntry.$valid && ctrl.selectedItem && create()" novalidate>
+        <h2 ng-bind="namings[0].title"></h2>
 
-        <div layout-gt-sm="row">
-          <div id="autocomplete">
-            <md-autocomplete
-                ng-disabled="ctrl.isDisabled"
-                md-no-cache="ctrl.noCache"
-                md-selected-item="ctrl.selectedItem"
-                md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
-                md-search-text="ctrl.searchText"
-                md-selected-item-change="ctrl.selectedItemChange(item)"
-                md-items="item in ctrl.querySearch(ctrl.searchText)"
-                md-item-text="item.name + ' ' + item.last"
-                md-min-length="0"
-                md-floating-label="Author">
-              <md-item-template>
-                <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.name}} {{item.last}}</span>
-              </md-item-template>
-              <md-not-found>
-                No authors matching "{{ctrl.searchText}}" were found.
-        <!-- <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a> -->
-              </md-not-found>
-            </md-autocomplete>
+        <br />
+        <h3>Authors</h3>
+        <fieldset data-ng-repeat="authorAuto in authorAutos">
+          <div layout-gt-sm="row">
+            <div id="autocomplete">
+              <md-autocomplete
+                  ng-disabled="ctrl.isDisabled"
+                  md-no-cache="ctrl.noCache"
+                  md-selected-item="authorAuto.selectedItem"
+                  md-search-text-change="ctrl.searchTextChange(authorAuto.searchText)"
+                  md-search-text="authorAuto.searchText"
+                  md-selected-item-change="ctrl.selectedItemChange(item)"
+                  md-items="item in ctrl.querySearch(authorAuto.searchText)"
+                  md-item-text="item.name + ' ' + item.last"
+                  md-min-length="0"
+                  md-floating-label="Author">
+                <md-item-template>
+                  <span md-highlight-text="authorAuto.searchText" md-highlight-flags="^i">{{item.name}} {{item.last}}</span>
+                </md-item-template>
+                <md-not-found>
+                  No authors matching "{{authorAuto.searchText}}" were found.
+          <!-- <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a> -->
+                </md-not-found>
+              </md-autocomplete>
+            </div>
+
+
           </div>
+          <md-button class="md-raised md-warn remove" ng-show="!$first" ng-click="removeAuthor($index)">Remove</button>
+        </fieldset>
 
-          <md-input-container class="md-block" flex-gt-sm>
+
+        <div layout="row" layout-align="end center">
             <md-button class="md-raised md-primary" ng-click="dialogCreate($event)">
               Create New Author 
             </md-button>
-          </md-input-container>
 
+          <md-button class="md-primary" data-ng-click="addNewAuthor()">+ Add another author</md-button>
         </div>
 
         <div layout-gt-sm="row">
@@ -68,22 +77,7 @@
             </ul>
         </md-input-container>
 
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>English Title</label>
-          <input data-ng-model="titleEn" required>
-          <div ng-messages>
-            <div ng-message="required">This is required.</div>
-          </div>
-        </md-input-container>
-
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Portuguese Title</label>
-          <input data-ng-model="titlePt" required>
-          <div ng-messages>
-            <div ng-message="required">This is required.</div>
-          </div>
-        </md-input-container>
-
+        <!-- Super broken, plz fix -->
         <md-input-container class="md-block" flex-gt-sm>
           <label>Issue it belongs to</label>
           <input ng-model="issue" required>
@@ -92,27 +86,38 @@
           </div>
         </md-input-container>
 
-        <h2 class="md-title">English Keywords (Press enter after each keyword)</h2>
-        <md-chips ng-model="keywordsEn" readonly="false"></md-chips>
+        <!-- ****************** Naming list ********************* -->
+        <h3>Titles</h2>
+        <fieldset data-ng-repeat="naming in namings" id="single-entry">
+          <!-- Title -->
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Title</label>
+            <input data-ng-model="naming.title" required>
+            <div ng-messages>
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
 
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Abstract</label>
-          <textarea name="abstractDescEn" data-ng-model="abstractDescEn"></textarea>
-          <div ng-messages>
-            <div ng-message="required">This is required.</div>
-          </div>
-        </md-input-container>
+          <!-- Keywords -->
+          <h2 class="md-title">Keywords (Press enter after each keyword)</h2>
+          <md-chips ng-model="naming.keywords" readonly="false"></md-chips>
 
-        <h2 class="md-title">Portuguese Keywords (Press enter after each keyword)</h2>
-        <md-chips ng-model="keywordsPt" readonly="false"></md-chips>
+          <!-- Abstract -->
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Abstract</label>
+            <textarea name="desc" data-ng-model="naming.desc"></textarea>
+            <div ng-messages>
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
 
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Abstract</label>
-          <textarea name="abstractDescPt" data-ng-model="abstractDescPt"></textarea>
-          <div ng-messages>
-            <div ng-message="required">This is required.</div>
-          </div>
-        </md-input-container>
+          <md-button class="md-raised md-warn remove" ng-show="!$first" ng-click="removeNaming($index)">Remove</button>
+        </fieldset>
+
+        <div layout="row" layout-align="end center">
+          <md-button class="md-primary" data-ng-click="addNewNaming()">+ Add another</md-button>
+        </div>
+        <!-- *************************************************** -->
 
         <md-input-container class="md-block" flex-gt-sm>
           <md-button class="md-raised md-primary" ngf-select="addImages($files, $invalidFiles)" multiple
@@ -182,3 +187,44 @@
     </md-dialog-content>
   </md-dialog>
 </script>
+        <!--
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>English Title</label>
+          <input data-ng-model="titleEn" required>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Portuguese Title</label>
+          <input data-ng-model="titlePt" required>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+
+
+        <h2 class="md-title">English Keywords (Press enter after each keyword)</h2>
+        <md-chips ng-model="keywordsEn" readonly="false"></md-chips>
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Abstract</label>
+          <textarea name="abstractDescEn" data-ng-model="abstractDescEn"></textarea>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+
+        <h2 class="md-title">Portuguese Keywords (Press enter after each keyword)</h2>
+        <md-chips ng-model="keywordsPt" readonly="false"></md-chips>
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Abstract</label>
+          <textarea name="abstractDescPt" data-ng-model="abstractDescPt"></textarea>
+          <div ng-messages>
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+        -->
+

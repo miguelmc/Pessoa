@@ -5,26 +5,36 @@ var mongoose = require('mongoose'),
     db = require('../../config/mongoose');
 
 var EntrySchema = new Schema({
-  // Might need to make an Author model
   author: {
     type: String
     //required: 'Author cannot be blank'
   },
-  author2: {
-    type: Schema.ObjectId,
+  authors: {
+    type: [Schema.ObjectId],
     ref: 'Author',
     required: true
   },
-  titleEn: {
-    type: String,
-    unique: 'English title already exists',
+  titles: {
+    type: [String],
+    // unique: 'English title already exists'
     required: 'Title cannot be blank'
+  },
+  keywordSets: {
+    type: [[String]]
+  },
+  descs: {
+    type: [String]
+  },
+  /*titleEn: {
+    type: String
+    // unique: 'English title already exists',
+    //required: 'Title cannot be blank'
   },
   titlePt: {
-    type: String,
-    unique: 'Portuguese title already exists',
-    required: 'Title cannot be blank'
-  },
+    type: String
+    // unique: 'Portuguese title already exists',
+    //required: 'Title cannot be blank'
+  },*/
   type: {
     type: String,
     enum: ['Article', 'Document', "Review", "Tribute"],
@@ -35,16 +45,16 @@ var EntrySchema = new Schema({
     ref: 'Issue'
     // required: true
   },
-  abstractDescEn: {
+  /*abstractDescEn: {
     type: String
     //required: 'Please add an abstract in English'
   },
   abstractDescPt: {
     type: String
     //required: 'Please add an abstract in Portuguese'
-  },
-  keywordsEn: [String],
-  keywordsPt: [String],
+  },*/
+  //keywordsEn: [String],
+  //keywordsPt: [String],
   pdf: {
     type: Schema.ObjectId,
   },

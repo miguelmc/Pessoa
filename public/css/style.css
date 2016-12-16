@@ -29,6 +29,7 @@ ul {
   list-style-type: none;
 }
 
+
 .center {
   text-align: center;
 }
@@ -153,6 +154,10 @@ ul {
   display: block;
 }
 
+.abstract li {
+  display: inline-block;
+}
+
 
 
 .button-center {
@@ -199,7 +204,10 @@ ul {
 }
 
 
-
+#authors-list {
+  display: inline-block;
+  font-size: 16px;
+}
 
 
 

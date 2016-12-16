@@ -1,65 +1,37 @@
 angular.module('entries').controller('EntriesController',
   ['$scope', '$routeParams', '$location', '$mdDialog', '$timeout', 'Upload', 'Authentication', 'Entries', 'Authors', '$log', '$q',
     function($scope, $routeParams, $location, $mdDialog, $timeout, Upload, Authentication, Entries, Authors, $log, $q) {
+
       $scope.authentication = Authentication;
       $scope.keywordsEn = [];
       $scope.keywordsPt = [];
+      $scope.authorInfo = {};
+      $scope.entriesSorted = {};
       $scope.issue = 1; // TODO: default to last issue created
 
-      // -------------------------------------------------------
-      var self = this;
-      self.simulateQuery = false;
-      self.isDisabled    = false;
-      self.authors = loadAll();
-      self.querySearch   = querySearch;
-      self.selectedItemChange = selectedItemChange;
-      self.searchTextChange   = searchTextChange;
+      $scope.authorAutos = [{searchText: ""}];
+      $scope.namings = [{title: "Main title", keywords: [], desc: ""}];
 
-      function querySearch (query) {
-        var results = query ? self.authors.filter( createFilterFor(query) ) : self.authors,
-            deferred;
-        if (self.simulateQuery) {
-          deferred = $q.defer();
-          $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-          return deferred.promise;
-        } else {
-          return results;
-        }
+
+      // Namings adding removal -------------------------------
+      $scope.addNewNaming = function() {
+        $scope.namings.push({title: "Secondary title",
+                             keywords: [], desc: ""});
       }
 
-      function searchTextChange(text) {
-        $log.info('Text changed to ' + text);
+      $scope.removeNaming = function(item) {
+        $scope.namings.splice(item, 1);
       }
-      function selectedItemChange(item) {
-        $log.info('Item changed to ' + JSON.stringify(item));
-      }
-
-      /**
-      * Build `authors` list of key/value pairs
-      */
-      function loadAll() {
-        var allAuthors = Authors.query(function() {
-          console.log(allAuthors)
-          allAuthors = allAuthors.map( function (author) {
-            author.value = author.name.toLowerCase();
-            //author.name = author.name;
-            return author;
-          });
-        });
-
-        return allAuthors;
+      // Authors adding removal -------------------------------
+      $scope.addNewAuthor= function() {
+        $scope.authorAutos.push({searchText: ""});
       }
 
-      /**
-      * Create filter function for a query string
-      */
-      function createFilterFor(query) {
-        var lowercaseQuery = angular.lowercase(query);
-        return function filterFn(state) {
-          return (state.value.indexOf(lowercaseQuery) === 0);
-        };
+      $scope.removeAuthor= function(item) {
+        $scope.authorAutos.splice(item, 1);
       }
       // -------------------------------------------------------
+      
 
       $scope.toggleAbstract = function(index) {
         var abs = $(".abstract").eq(index);
@@ -177,18 +149,31 @@ angular.module('entries').controller('EntriesController',
         });
       }
 
-      $scope.create = function(author) {
+      $scope.create = function() {
         // TODO: See whats up with img, pdf storage
         var entry = new Entries({
           //author: this.author,
-          author2: author._id,
-          titleEn: this.titleEn,
-          titlePt: this.titlePt,
+          authors: [],
+          titles: [],
+          keywordSets: [],
+          descs: [],
           type: this.type,
           issue: this.issue,
-          abstractDesc: this.abstractDesc,
-          keywordsPt: $scope.keywordsPt,
-          keywordsEn: $scope.keywordsEn
+        });
+
+        // authors array is inserted in alphabetical order.
+        $scope.authorAutos.sort(function(authorData) {
+          splittedName = authorData.searchText.split(' ');
+          return splittedName[1] + splittedName[0];
+        })
+        angular.forEach($scope.authorAutos, function(authorData) {
+          entry.authors.push(authorData._id);
+        });
+
+        angular.forEach($scope.namings, function(namingData) {
+          entry.titles.push(namingData.title);
+          entry.keywordSets.push(namingData.keywords);
+          entry.descs.push(namingData.desc);
         });
 
         entry.$save(function(response) {
@@ -211,11 +196,72 @@ angular.module('entries').controller('EntriesController',
         });
       };
 
+      /*
+       * Sorts entries alphabetically,
+       * joins entries that have the same author
+       */
+      function mergeCommonEntries() {
+
+        angular.forEach($scope.entries, function(entry) {
+          key = entry.authors
+                     .map(function(id) {
+                            author = $scope.authorInfo[id];
+                            return author.last + author.name;
+                          })
+                     .sort()
+                     .join('');
+
+          if (key in $scope.entriesSorted) {
+            $scope.entriesSorted[key].push(entry);
+          }
+          else {
+            $scope.entriesSorted[key] = [entry];
+          }
+        });
+
+        $scope.entriesSorted = Object.keys($scope.entriesSorted).map(function(key) {
+              return $scope.entriesSorted[key];
+        });
+        $scope.entriesSorted = $scope.entriesSorted.sort().reverse();
+
+        $scope.$apply();
+        console.log($scope.entriesSorted);
+      }
+
       $scope.find = function() {
         // Hack, but it works!
         $scope.title = $location.search().type + 's';
 
-        $scope.entries = Entries.query($location.search());
+        $scope.authorInfo = {};
+        $scope.entries = Entries.query($location.search(), function (res) {
+          // Get all needed authors.
+          angular.forEach(res, function(currEntry) {
+            angular.forEach(currEntry.authors, function(authorId) {
+              $scope.authorInfo[authorId] = {};
+            });
+          });
+
+          // Deep copy
+          var authorInfoCopy = jQuery.extend(true, {}, $scope.authorInfo);
+          var count = [0];
+
+          angular.forEach(authorInfoCopy, function(author, id) {
+            var cnt = this;
+            Authors.query({
+              _id: id 
+            }, function(r) {
+              $scope.authorInfo[id] = r[0];
+              cnt[0]++;
+            });
+          }, count);
+
+          var _flagCheck = setInterval(function() {
+            if (count[0] == Object.keys($scope.authorInfo).length) {
+              clearInterval(_flagCheck);
+              mergeCommonEntries();
+            }
+          }, 100); // interval set at 100 milliseconds
+        });
       };
 
       $scope.findOne = function() {
@@ -261,7 +307,7 @@ angular.module('entries').controller('EntriesController',
 
             author.$save(function(response) {
               // Reload authors for autocompleter
-              self.authors = loadAll();
+              self.authors = loadAllAuthors();
             }, function(errorResponse) {
               console.log(errorResponse.data.message);
               $scope.error = errorResponse.data.message;
@@ -298,6 +344,60 @@ angular.module('entries').controller('EntriesController',
           }
         }, function() {});
       };
+
+      // ------- Autocomplete --------------------------------------
+      var self = this;
+      self.simulateQuery = false;
+      self.isDisabled    = false;
+      self.authors = loadAllAuthors();
+      self.querySearch   = querySearch;
+      self.selectedItemChange = selectedItemChange;
+      self.searchTextChange   = searchTextChange;
+
+      function querySearch (query) {
+        var results = query ? self.authors.filter( createFilterFor(query) ) : self.authors,
+            deferred;
+        if (self.simulateQuery) {
+          deferred = $q.defer();
+          $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+          return deferred.promise;
+        } else {
+          return results;
+        }
+      }
+
+      function searchTextChange(text) {
+        $log.info('Text changed to ' + text);
+      }
+      function selectedItemChange(item) {
+        $log.info('Item changed to ' + JSON.stringify(item));
+      }
+
+      /**
+      * Build `authors` list of key/value pairs
+      */
+      function loadAllAuthors() {
+        var allAuthors = Authors.query(function() {
+          allAuthors = allAuthors.map( function (author) {
+            author.value = author.name.toLowerCase();
+            //author.name = author.name;
+            return author;
+          });
+        });
+
+        return allAuthors;
+      }
+
+      /**
+      * Create filter function for a query string
+      */
+      function createFilterFor(query) {
+        var lowercaseQuery = angular.lowercase(query);
+        return function filterFn(state) {
+          return (state.value.indexOf(lowercaseQuery) === 0);
+        };
+      }
+      // -------------------------------------------------------
     }
   ]
 );

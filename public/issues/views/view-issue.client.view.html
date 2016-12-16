@@ -19,6 +19,7 @@
   </div>
 
   <div>
+    <br />
     <a href="/file/{{issue.pdf}}">Download issue's main pdf</a>
   </div>
   <small>
@@ -34,28 +35,49 @@
   <ul id="entry-list">
     <li data-ng-repeat="entry in entries.filter(checkEntry('Article'))" id="single-entry2">
       <div data-ng-show="entry.type == 'Article'">
-        <h2><a data-ng-href="#!/entries/{{entry._id}}">{{entry.author}}</a></h2>
-        <h3>{{entry.titleEn}}</h3>
-        <h3>[{{entry.titlePt}}]</h3>
+        <div data-ng-repeat="author in authorInfo[$index]" id="authors-list">
+          <h2><a data-ng-href="#!/entries/{{entry._id}}">
+              {{author.name}} {{author.last}}
+          </a><span ng-show="!$last">,&nbsp</span></h2>
+        </div>
+        <h2>{{entry.titles[0]}}</h2>
+        <div data-ng-repeat="title in entry.titles">
+          <div ng-if="$index!=0">
+            <h3>[{{title}}]</h3>
+          </div>
+        </div>
         <div layout-gt-sm="row" layout-align="end center">
           <md-button ng-show="entry.pdf" class="orangered" href="/file/{{entry.pdf}}">pdf</md-button>
           <md-button ng-show="entry.images.length>0" class="orangered" href="#!/entries/{{entry._id}}#view-entry-images">Imagens / Images</md-button>
-          <md-button ng-show="entry.abstractDescEn || entry.abstractDescPt || entry.keywordsEn.length>0 || entry.keywordsPt.length>0" class="orangered" ng-click="toggleAbstract($index)">Resumo / Abstract </md-button>
+          <md-button ng-show="entry.keywordSets[0].length!=0 || entry.descs[0]!=''" class="orangered" ng-click="toggleAbstract($index)">Resumo / Abstract </md-button>
         </div>
         <div class="abstract" style="display:none">
-          <p><strong>Keywords: </strong>
-            <span ng-repeat="word in entry.keywordsEn">{{word}}<span data-ng-show="!$last">, </span></span>
-          </p>
-          <p>{{entry.abstractDescEn}}</p>
-          <p><strong>Palavras-chave: </strong>
-            <span ng-repeat="word in entry.keywordsPt">{{word}}<span data-ng-show="!$last">, </span></span>
-          </p>
-          <p>{{entry.abstractDescPt}}</p>
+          <div data-ng-repeat="keywords in entry.keywordSets">
+            <strong>Keywords:</strong> <ul>
+              <li ng-repeat="word in keywords">
+                {{word}}<span ng-show="!$last">,&nbsp</span>
+              </li>
+            </ul>
+            <p>{{entry.descs[$index]}}</p>
+            <br />
+          </div>
         </div>
 
-        <div data-ng-show="authentication.user" layout-gt-sm="row" layout-align="end center">
-          <md-button href="/#!/entries/{{entry._id}}/edit">Edit</md-button>
-          <md-button class="md-warn" data-ng-click="delete(); $event.preventDefault();">Delete</md-button>
+        <div class="abstract" style="display:none">
+          <strong>Keywords:</strong> <ul>
+            <li ng-repeat="word in entry.keywordsPt">{{word}}</li>
+          </ul>
+          <p>{{entry.abstractDesc}}</p>
+          <strong>Palavras-chave:</strong> <ul>
+            <li ng-repeat="word in entry.keywordsEn">{{word}}</li>
+          </ul>
+          <p>{{entry.abstractDesc}}</p>
+        </div>
+
+        <!-- Probably need to add confirmation on deletion  -->
+        <div data-ng-show="authentication.user">
+          <a href="/#!/entries/{{entry._id}}/edit">edit</a>
+          <a href="#" data-ng-click="delete(); $event.preventDefault();">delete</a>
         </div>
       <div>
     </l1>
@@ -68,14 +90,35 @@
   <ul id="entry-list">
     <li data-ng-repeat="entry in entries.filter(checkEntry('Document'))" id="single-entry2">
       <div data-ng-if="entry.type == 'Document'">
+        <div data-ng-repeat="author in authorInfo[$index]" id="authors-list">
+          <h2><a data-ng-href="#!/entries/{{entry._id}}">
+              {{author.name}} {{author.last}}
+          </a><span ng-show="!$last">,&nbsp</span></h2>
+        </div>
         <h2><a data-ng-href="#!/entries/{{entry._id}}">{{entry.author}}</a></h2>
-        <h3>{{entry.titleEn}}</h3>
-        <h3>[{{entry.titlePt}}]</h3>
+        <h2>{{entry.titles[0]}}</h2>
+        <div data-ng-repeat="title in entry.titles">
+          <div ng-if="$index!=0">
+            <h3>[{{title}}]</h3>
+          </div>
+        </div>
         <div layout-gt-sm="row" layout-align="end center">
           <md-button ng-show="entry.pdf" class="orangered" href="/file/{{entry.pdf}}">pdf</md-button>
           <md-button ng-show="entry.images.length>0" class="orangered" href="#!/entries/{{entry._id}}#view-entry-images">Imagens / Images</md-button>
-          <md-button ng-show="entry.abstractDescEn || entry.abstractDescPt || entry.keywordsEn.length>0 || entry.keywordsPt.length>0" class="orangered" ng-click="toggleAbstract($index)">Resumo / Abstract </md-button>
+          <md-button ng-show="entry.keywordSets[0].length!=0 || entry.descs[0]!=''" class="orangered" ng-click="toggleAbstract($index)">Resumo / Abstract </md-button>
         </div>
+        <div class="abstract" style="display:none">
+          <div data-ng-repeat="keywords in entry.keywordSets">
+            <strong>Keywords:</strong> <ul>
+              <li ng-repeat="word in keywords">
+                {{word}}<span ng-show="!$last">,&nbsp</span>
+              </li>
+            </ul>
+            <p>{{entry.descs[$index]}}</p>
+            <br />
+          </div>
+        </div>
+
         <div class="abstract" style="display:none">
           <strong>Keywords:</strong> <ul>
             <li ng-repeat="word in entry.keywordsPt">{{word}}</li>
@@ -103,14 +146,35 @@
   <ul>
     <li data-ng-repeat="entry in entries.filter(checkEntry('Review'))" id="single-entry2">
       <div data-ng-if="entry.type == 'Review'">
+        <div data-ng-repeat="author in authorInfo[$index]" id="authors-list">
+          <h2><a data-ng-href="#!/entries/{{entry._id}}">
+              {{author.name}} {{author.last}}
+          </a><span ng-show="!$last">,&nbsp</span></h2>
+        </div>
         <h2><a data-ng-href="#!/entries/{{entry._id}}">{{entry.author}}</a></h2>
-        <h3>{{entry.titleEn}}</h3>
-        <h3>[{{entry.titlePt}}]</h3>
+        <h2>{{entry.titles[0]}}</h2>
+        <div data-ng-repeat="title in entry.titles">
+          <div ng-if="$index!=0">
+            <h3>[{{title}}]</h3>
+          </div>
+        </div>
         <div layout-gt-sm="row" layout-align="end center">
           <md-button ng-show="entry.pdf" class="orangered" href="/file/{{entry.pdf}}">pdf</md-button>
           <md-button ng-show="entry.images.length>0" class="orangered" href="#!/entries/{{entry._id}}#view-entry-images">Imagens / Images</md-button>
-          <md-button ng-show="entry.abstractDescEn || entry.abstractDescPt || entry.keywordsEn.length>0 || entry.keywordsPt.length>0" class="orangered" ng-click="toggleAbstract($index)">Resumo / Abstract </md-button>
+          <md-button ng-show="entry.keywordSets[0].length!=0 || entry.descs[0]!=''" class="orangered" ng-click="toggleAbstract($index)">Resumo / Abstract </md-button>
         </div>
+        <div class="abstract" style="display:none">
+          <div data-ng-repeat="keywords in entry.keywordSets">
+            <strong>Keywords:</strong> <ul>
+              <li ng-repeat="word in keywords">
+                {{word}}<span ng-show="!$last">,&nbsp</span>
+              </li>
+            </ul>
+            <p>{{entry.descs[$index]}}</p>
+            <br />
+          </div>
+        </div>
+
         <div class="abstract" style="display:none">
           <strong>Keywords:</strong> <ul>
             <li ng-repeat="word in entry.keywordsPt">{{word}}</li>
@@ -138,14 +202,35 @@
   <ul>
     <li data-ng-repeat="entry in entries.filter(checkEntry('Tribute'))" id="single-entry2">
       <div data-ng-if="entry.type == 'Tribute'">
+        <div data-ng-repeat="author in authorInfo[$index]" id="authors-list">
+          <h2><a data-ng-href="#!/entries/{{entry._id}}">
+              {{author.name}} {{author.last}}
+          </a><span ng-show="!$last">,&nbsp</span></h2>
+        </div>
         <h2><a data-ng-href="#!/entries/{{entry._id}}">{{entry.author}}</a></h2>
-        <h3>{{entry.titleEn}}</h3>
-        <h3>[{{entry.titlePt}}]</h3>
+        <h2>{{entry.titles[0]}}</h2>
+        <div data-ng-repeat="title in entry.titles">
+          <div ng-if="$index!=0">
+            <h3>[{{title}}]</h3>
+          </div>
+        </div>
         <div layout-gt-sm="row" layout-align="end center">
           <md-button ng-show="entry.pdf" class="orangered" href="/file/{{entry.pdf}}">pdf</md-button>
           <md-button ng-show="entry.images.length>0" class="orangered" href="#!/entries/{{entry._id}}#view-entry-images">Imagens / Images</md-button>
-          <md-button ng-show="entry.abstractDescEn || entry.abstractDescPt || entry.keywordsEn.length>0 || entry.keywordsPt.length>0" class="orangered" ng-click="toggleAbstract($index)">Resumo / Abstract </md-button>
+          <md-button ng-show="entry.keywordSets[0].length!=0 || entry.descs[0]!=''" class="orangered" ng-click="toggleAbstract($index)">Resumo / Abstract </md-button>
         </div>
+        <div class="abstract" style="display:none">
+          <div data-ng-repeat="keywords in entry.keywordSets">
+            <strong>Keywords:</strong> <ul>
+              <li ng-repeat="word in keywords">
+                {{word}}<span ng-show="!$last">,&nbsp</span>
+              </li>
+            </ul>
+            <p>{{entry.descs[$index]}}</p>
+            <br />
+          </div>
+        </div>
+
         <div class="abstract" style="display:none">
           <strong>Keywords:</strong> <ul>
             <li ng-repeat="word in entry.keywordsPt">{{word}}</li>

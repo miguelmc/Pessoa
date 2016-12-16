@@ -44,7 +44,7 @@ exports.create = function(req, res, next) {
 
 exports.list = function(req, res, next) {
   // console.log(db.gfs);
-  Author.find({}, function(err, authors){
+  Author.find(req.query, function(err, authors){
     if (err) {
       return res.status(400).send({
         message: getErrorMessage(err)

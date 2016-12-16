@@ -9,6 +9,7 @@ var Grid = require('gridfs-stream');
 var db = mongoose.createConnection(config.db);
 
 // app specific modules
+var Author = require('./app/models/author.server.model');
 var Issue = require('./app/models/issue.server.model');
 var Entry = require('./app/models/entry.server.model');
 var User = require('./app/models/user.server.model');
@@ -28,6 +29,7 @@ db.once('open', function() {
   // attach modules to the repl context
   replServer.context.config = config;
   replServer.context.db = db;  
+  replServer.context.Author= db.model('Author');  
   replServer.context.Issue = db.model('Issue');  
   replServer.context.Entry = db.model('Entry');  
   replServer.context.User = db.model('User');  
